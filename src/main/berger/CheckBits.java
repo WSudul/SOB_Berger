@@ -20,7 +20,8 @@ public class CheckBits  {
 
         code.clear();
         for(int i=0; i<code_length;++i){
-            code.set(i,cardinality & (1 << i));
+            boolean value=((cardinality & (1 << i))==1);
+            code.set(i,value);
         }
     }
 
