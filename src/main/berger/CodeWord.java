@@ -2,25 +2,17 @@ package berger;
 
 import java.util.BitSet;
 
-public class CodeWord
-{
-    public CodeWord( byte[] byte_array){
+public class CodeWord extends BitContainer {
 
-        this.bitSet=BitSet.valueOf(byte_array);
-    }
 
-    public int length(){
-        return bitSet.length();
-    }
-
-    public BitSet getBitSet(){
-        return this.bitSet;
+    public CodeWord(byte[] byte_array) {
+        super(byte_array.length * Byte.SIZE);
     }
 
 
-    private  BitSet convert(long value) {
+    private BitSet convert(long value) {
 
-        BitSet bitSet=BitSet.valueOf(new long[]{value});
+        BitSet bitSet = BitSet.valueOf(new long[]{value});
         return bitSet;
     }
 
@@ -31,8 +23,5 @@ public class CodeWord
         }
         return value;
     }
-
-
-    private BitSet bitSet;
 
 }
