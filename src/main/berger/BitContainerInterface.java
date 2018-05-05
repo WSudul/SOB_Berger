@@ -1,7 +1,9 @@
 package berger;
 
+import java.util.List;
+
 /* interface for basic bit switching related operations on given container */
-public interface BitModifiableInterface {
+public interface BitContainerInterface {
     /* return length of used container */
     int length();
 
@@ -14,4 +16,7 @@ public interface BitModifiableInterface {
 
     /* set  (index+1) bit as 0. Returns false is addressing invalid index*/
     boolean clearBit(int index);
+
+    /* returns representation of container as list of booleans*/
+    List<Boolean> toList();
 }

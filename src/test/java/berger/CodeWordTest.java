@@ -6,18 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 public class CodeWordTest {
 
-    @Test
-    public void flipBit() throws Exception {
-    }
-
-    @Test
-    public void setBit() throws Exception {
-    }
-
-    @Test
-    public void clearBit() throws Exception {
-    }
-
 
     @Test
     public void length_empty_array() throws Exception {
@@ -36,6 +24,7 @@ public class CodeWordTest {
         // The container should keep also trailing zeros
         CodeWord codeWord = new CodeWord(multiple_bytes);
         assertEquals(expected_length, codeWord.length());
+
     }
 
 
@@ -54,7 +43,6 @@ public class CodeWordTest {
         final int expected_length = 24; //8+8+8
         CodeWord codeWord = new CodeWord(multiple_bytes);
         assertEquals(expected_length, codeWord.length());
-        System.out.println(codeWord.getBitSet().toString());
     }
 
 

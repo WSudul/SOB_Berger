@@ -1,8 +1,10 @@
 package berger;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
-public abstract class BitContainer implements BitModifiableInterface {
+abstract class BitContainer implements BitContainerInterface {
 
     protected BitSet bitContainer_;
     protected int size_;
@@ -50,13 +52,17 @@ public abstract class BitContainer implements BitModifiableInterface {
             return false;
     }
 
-    //#TODO remove this!
-    public BitSet getBitSet() {
-        return this.bitContainer_;
+    @Override
+    public List<Boolean> toList() {
+        List<Boolean> list = new ArrayList<>();
+        for (int i = 0; i < size_; ++i) {
+            list.add(bitContainer_.get(i));
+        }
+        return list;
     }
 
     private boolean isIndexValid(int index) {
-        return (index > 0 && index < bitContainer_.length());
+        return (index >= 0 && index < size_);
     }
 
 }

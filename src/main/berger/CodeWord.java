@@ -7,6 +7,7 @@ public class CodeWord extends BitContainer {
 
     public CodeWord(byte[] byte_array) {
         super(byte_array.length * Byte.SIZE);
+        bitContainer_ = BitSet.valueOf(byte_array);
     }
 
 

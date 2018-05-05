@@ -1,7 +1,6 @@
 package berger;
 
 import java.nio.ByteBuffer;
-import java.util.BitSet;
 
 public class BergerCode {
 
@@ -29,12 +28,9 @@ public class BergerCode {
 
     private void Initialize(byte[] value){
         this.codeWord=new CodeWord(value);
-        this.checkBits=new CheckBits(codeWord.getBitSet());
+        this.checkBits = new CheckBits(codeWord.toList());
     }
 
-    public BitSet getValue(){
-        return codeWord.getBitSet();
-    }
 
 
     private CodeWord codeWord;
