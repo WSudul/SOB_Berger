@@ -2,6 +2,9 @@ package berger;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class CodeWordTest {
@@ -45,5 +48,19 @@ public class CodeWordTest {
         assertEquals(expected_length, codeWord.length());
     }
 
+
+    @Test
+    public void toListShouldReturnValidList() throws Exception {
+        final byte[] multiple_bytes = {0x2A}; // {42} - 0b00101010
+        CodeWord codeWord = new CodeWord(multiple_bytes);
+
+
+        List<Boolean> expected_list = Arrays.asList
+                (false, true, false, true,
+                        false, true, false, false);
+
+        assertEquals(expected_list, codeWord.toList());
+
+    }
 
 }
