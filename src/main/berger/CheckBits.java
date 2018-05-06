@@ -12,7 +12,7 @@ public class CheckBits extends BitContainer {
     }
 
     private void calculateCode(List<Boolean> codeWordList) {
-        double log = Logarithm.log2(codeWordList.size());
+        double log = Logarithm.log2(codeWordList.size() + 1);
         size_ = (int) Math.ceil(log);
         bitContainer_.clear();
 
@@ -36,7 +36,7 @@ public class CheckBits extends BitContainer {
         }
     }
 
-
+    //#TODO this needs to be changed to return 2s complement
     private BitSet convertLongToBitSet(long value) {
         BitSet bitset = new BitSet();
         int index = 0;
