@@ -1,6 +1,7 @@
 package berger;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
 public class BergerCode {
 
@@ -26,12 +27,44 @@ public class BergerCode {
         Initialize(value);
     }
 
-    private void Initialize(byte[] value){
-        this.codeWord=new CodeWord(value);
-        this.checkBits = new CheckBits(codeWord.toList());
+    public CodeWord getCodeWord() {
+        return codeWord;
     }
 
+    public CheckBits getCheckBits() {
+        return checkBits;
+    }
 
+    public boolean isErrorDetected() {
+        List<Boolean> codeWordList = codeWord.toList();
+        long expectedOnesCount = decodeCheckBits(checkBits);
+        long onesCount = 0;
+
+        for (Boolean bit : codeWordList) {
+            if (bit)
+                ++onesCount;
+        }
+        return (expectedOnesCount != onesCount);
+    }
+
+    private long decodeCheckBits(CheckBits checkBits) {
+        List<Boolean> checkBitsList = checkBits.toList();
+        long highestValue = 1 << (checkBitsList.size() - 1);
+
+        long result = 0;
+        for (Boolean bit : checkBitsList) {
+            if (!bit)
+                result += highestValue;
+
+            highestValue = highestValue >> 1;
+        }
+        return result;
+    }
+
+    private void Initialize(byte[] value) {
+        this.codeWord = new CodeWord(value);
+        this.checkBits = new CheckBits(codeWord.toList());
+    }
 
     private CodeWord codeWord;
     private CheckBits checkBits;
