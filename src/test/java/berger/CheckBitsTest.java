@@ -30,17 +30,54 @@ public class CheckBitsTest {
 
 
     @Test
-    public void toListShouldReturnValidList() throws Exception {
+    public void toListShouldReturnValidList_8BitInput() throws Exception {
         List<Boolean> inputList = Arrays.asList(
                 true, true, false, false,
                 false, true, true, false);
         CheckBits checkBits = new CheckBits(inputList);
 
+        final int expectedSize = 4;
         List<Boolean> expected_list = Arrays.asList(
-                false, true, false, false); //binary 4 in 2s complement 0b0011
+                true, false, true, true); //binary 4 complemented 1011
 
+        assertEquals(expectedSize, checkBits.length());
         assertEquals(expected_list, checkBits.toList());
+    }
 
+    @Test
+    public void toListShouldReturnValidListForLargeInput_7BitInput() throws Exception {
+        List<Boolean> inputList = Arrays.asList(
+                true, false, false,
+                false, true, true, false);
+
+        CheckBits checkBits = new CheckBits(inputList);
+
+        final int expectedSize = 3;
+        List<Boolean> expected_list = Arrays.asList(
+                true, false, false); //binary 3 complemented 100
+
+        assertEquals(expectedSize, checkBits.length());
+        assertEquals(expected_list, checkBits.toList());
+    }
+
+    @Test
+    public void toListShouldReturnValidListForLargeInput_32BitInput() throws Exception {
+        List<Boolean> inputList_32bits = Arrays.asList(
+                true, true, true, true, true, true, true, true,
+                true, true, true, true, true, true, true, false,
+                false, false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false
+        ); //15 bits set to true
+
+
+        CheckBits checkBits = new CheckBits(inputList_32bits);
+
+        final int expectedSize = 6;
+        List<Boolean> expected_list = Arrays.asList(
+                true, true, false, false, false, false); //binary 15 complemented 110000
+
+        assertEquals(expectedSize, checkBits.length());
+        assertEquals(expected_list, checkBits.toList());
     }
 
 }
