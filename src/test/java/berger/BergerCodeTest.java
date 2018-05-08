@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class BergerCodeTest {
 
-    private final int value1 = 47;
+    private final int value1 = 47; //last 8 bits 00101111
     private final int binaryRepresentationSize1 = 32;
     private final int checkBitsSize1 = 6;
     private BergerCode bergerCode;
@@ -59,27 +59,27 @@ public class BergerCodeTest {
     }
 
     @Test
-    public void isErrorDetectedShouldReturnFalseForUnmodifiedObject() throws Exception {
+    public void shouldNotDetectError_UnmodifiedObject() throws Exception {
         assertFalse(bergerCode.isErrorDetected());
     }
 
     @Test
-    public void isErrorDetectedShouldReturnTrue_BidirectionalError() throws Exception {
-        bergerCode.getCodeWord().setBit(0);
-        bergerCode.getCodeWord().clearBit(1);
+    public void shouldNotDetectError_BidirectionalError() throws Exception {
+        bergerCode.getCodeWord().flipBit(0); //original bit set to 0
+        bergerCode.getCodeWord().flipBit(24); //original bit set to 1
 
-        assertTrue(bergerCode.isErrorDetected());
+        assertFalse(bergerCode.isErrorDetected());
     }
-
+    
     @Test
-    public void isErrorDetectedShouldReturnTrue_ModifiedCheckBits() throws Exception {
+    public void ErrorDetected_ModifiedCheckBits() throws Exception {
         bergerCode.getCheckBits().flipBit(0);
 
         assertTrue(bergerCode.isErrorDetected());
     }
 
     @Test
-    public void isErrorDetectedShouldReturnTrue_UnidirectionalErrors() throws Exception {
+    public void ErrorDetected_UnidirectionalErrors() throws Exception {
         bergerCode.getCodeWord().setBit(0);
         bergerCode.getCodeWord().setBit(1);
         bergerCode.getCodeWord().setBit(2);
