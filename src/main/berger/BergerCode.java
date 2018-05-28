@@ -27,6 +27,12 @@ public class BergerCode {
         Initialize(value);
     }
 
+    /*Copy ctor which creates deep copy of passed instance */
+    public BergerCode(BergerCode bergerCode) {
+        this.codeWord = new CodeWord(bergerCode.codeWord);
+        this.checkBits = new CheckBits(bergerCode.checkBits);
+    }
+
     public CodeWord getCodeWord() {
         return codeWord;
     }

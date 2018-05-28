@@ -11,6 +11,10 @@ public class CheckBits extends BitContainer {
 
     }
 
+    public CheckBits(CheckBits checkBits) {
+        super(checkBits);
+    }
+
     private void calculateCode(List<Boolean> codeWordList) {
         double log = Logarithm.log2(codeWordList.size() + 1);
         size_ = (int) Math.ceil(log);

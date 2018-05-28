@@ -10,6 +10,10 @@ public class CodeWord extends BitContainer {
         bitContainer_ = BitSet.valueOf(byte_array);
     }
 
+    public CodeWord(CodeWord codeWord) {
+        super(codeWord);
+    }
+
 
     private BitSet convert(long value) {
 

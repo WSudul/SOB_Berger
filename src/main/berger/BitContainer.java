@@ -19,6 +19,16 @@ abstract class BitContainer implements BitContainerInterface {
 
     }
 
+    public BitContainer(BitContainer container) {
+        this.bitContainer_ = new BitSet();
+        this.size_ = container.size_;
+
+        BitSet bitSetToCopy = container.bitContainer_;
+        for (int i = bitSetToCopy.nextSetBit(0); i != -1; i = bitSetToCopy.nextSetBit(i + 1)) {
+            this.bitContainer_.set(i);
+        }
+    }
+
     @Override
     public int length() {
         return size_;
