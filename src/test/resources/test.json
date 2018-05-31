@@ -1,0 +1,18 @@
+[
+  {
+    "type": "INT",
+    "data": "4321"
+  },
+  {
+    "type": "LONG",
+    "data": "1234567890"
+  },
+  {
+    "type": "STRING",
+    "data": "FooBar"
+  },
+  {
+    "type": "BYTES",
+    "data": "010101110001"
+  }
+]

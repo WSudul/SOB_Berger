@@ -8,6 +8,11 @@ public class DataInput {
     public DataInput() {
     }
 
+    public DataInput(InputType type, String data) {
+        this.type = type;
+        this.data = data;
+    }
+
     public InputType getType() {
         return type;
     }
@@ -23,4 +28,16 @@ public class DataInput {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataInput dataInput = (DataInput) o;
+
+        if (getType() != dataInput.getType()) return false;
+        return getData().equals(dataInput.getData());
+    }
+
 }

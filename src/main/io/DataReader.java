@@ -15,15 +15,11 @@ public class DataReader {
     private DataReader() {
     }
 
-    
     public static List<DataInput> readJsonData(String filename) throws IOException {
         Path file = Paths.get(filename);
         BufferedReader reader = Files.newBufferedReader(file);
         ObjectMapper mapper = new ObjectMapper();
-        List<DataInput> myObjects = Arrays.asList(mapper.readValue(reader, DataInput[].class));
-        return myObjects;
-
+        return Arrays.asList(mapper.readValue(reader, DataInput[].class));
     }
-
-
+    
 }

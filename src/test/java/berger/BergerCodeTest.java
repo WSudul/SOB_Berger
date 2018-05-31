@@ -70,7 +70,7 @@ public class BergerCodeTest {
 
         assertFalse(bergerCode.isErrorDetected());
     }
-    
+
     @Test
     public void ErrorDetected_ModifiedCheckBits() throws Exception {
         bergerCode.getCheckBits().flipBit(0);
