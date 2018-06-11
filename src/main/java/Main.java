@@ -10,7 +10,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //TODO change acces way to FXML file
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/sample.fxml").toURI().toURL());
         Parent root = loader.load();
         primaryStage.setTitle("Hello World");
