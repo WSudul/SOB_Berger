@@ -2,15 +2,7 @@ import berger.BergerCode;
 import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
-
-import java.util.*;
-
-import berger.BergerCode;
 import io.ChangeType;
-
-import java.io.File;
-import java.io.IOException;
-
 import io.DataInput;
 import io.DataReader;
 import javafx.event.ActionEvent;
@@ -22,6 +14,8 @@ import javafx.stage.Stage;
 import report.Record;
 import report.Report;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 
@@ -30,6 +24,7 @@ public class Controller {
 
 
     private List<BergerCode> bergerCodes=new ArrayList<>();
+    private Random generator = new Random(); //temporary - will be updated with random seed
 
     @FXML
     private Button Bit1, LoadFile, preset1,preset2,preset3,preset4;
@@ -48,7 +43,6 @@ public class Controller {
         final int kMax=5;
         Report report=new Report();
 
-        Random generator = new Random();
         for(BergerCode bergerCode: bergerCodes)
         {
             int randomNumber = generator.nextInt(kMax)+kMin;
@@ -94,11 +88,12 @@ public class Controller {
 
     private BergerCode PresetMultipleZeros(BergerCode bergerCode) {
 
+
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
-        SetMultipleOnesToZero(codeWord, 0.50);
-        SetMultipleOnesToZero(checkBits, 0.50);
+        SetMultipleOnesToZero(codeWord, generator.nextDouble() / 2.0);
+        SetMultipleOnesToZero(checkBits, generator.nextDouble() / 2.0);
 
         return bergerCode;
     }
@@ -109,8 +104,8 @@ public class Controller {
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
-        SetMultipleZerosToOnes(codeWord, 0.50);
-        SetMultipleZerosToOnes(checkBits, 0.50);
+        SetMultipleZerosToOnes(codeWord, generator.nextDouble() / 2.0);
+        SetMultipleZerosToOnes(checkBits, generator.nextDouble() / 2.0);
 
         return bergerCode;
     }
@@ -143,7 +138,6 @@ public class Controller {
     private Set<Integer> SelectIndexes(Set<Integer> indexes, int selectSize) {
         if (selectSize > indexes.size())
             return null;
-        Random generator = new Random();
         List<Integer> indexesList = new ArrayList<>(indexes);
         Set<Integer> selection = new TreeSet<>();
 
@@ -161,7 +155,7 @@ public class Controller {
         CheckBits checkBits = bergerCode.getCheckBits();
 
         final int totalLength = codeWord.length() + checkBits.length();
-        final int numberOfBitsToFlip = totalLength / 2;
+        final int numberOfBitsToFlip = (totalLength / 10) + generator.nextInt(totalLength / 2);
 
         Set<Integer> uniqueIndexes = GenerateUniqueIndexes(numberOfBitsToFlip,totalLength);
 
@@ -179,7 +173,6 @@ public class Controller {
     }
 
     private Set<Integer> GenerateUniqueIndexes(int n, int maxIndex){
-        Random generator = new Random();
         Set<Integer> uniqueIndexes =new TreeSet<>();
         while (uniqueIndexes.size() < n) {
             int index = generator.nextInt(maxIndex);
