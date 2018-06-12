@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <GridPane layoutX="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="789.0">
          <columnConstraints>
@@ -41,7 +41,7 @@
                         <Insets left="75.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Button mnemonicParsing="false" text="Generuj Raport" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleButtonActionGenerateReport" text="Generuj Raport" GridPane.columnIndex="1" />
                   <Label fx:id="Output" text="Komunikaty wyjściowe" GridPane.columnIndex="2" />
                   <GridPane>
                     <columnConstraints>
