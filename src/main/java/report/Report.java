@@ -47,7 +47,13 @@ public class Report {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Report{");
         sb.append("\ntimestamp=").append(timestamp);
-        sb.append("\n recordMap=").append(recordMap);
+        sb.append("\n recordMap=\n");
+        for (Map.Entry<BergerCode, List<Record>> entry : recordMap.entrySet()) {
+            sb.append(entry.getKey()).append("\n");
+            for (Record record : entry.getValue()) {
+                sb.append("Record=").append(record.toString()).append("\n");
+            }
+        }
         sb.append("\n}");
         return sb.toString();
     }
