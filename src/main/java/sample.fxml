@@ -36,12 +36,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Circle radius="42.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3">
+                  <Circle fx:id="BergerCodeStatus" radius="42.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3">
                      <GridPane.margin>
                         <Insets left="75.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Button mnemonicParsing="false" onAction="#handleButtonActionGenerateReport" text="Generuj Raport" GridPane.columnIndex="1" />
+                  <Button fx:id="GenerateRaport" mnemonicParsing="false" onAction="#handleButtonActionGenerateReport" text="Generuj Raport" GridPane.columnIndex="1" />
                   <Label fx:id="Output" text="Komunikaty wyjściowe" GridPane.columnIndex="2" />
                   <GridPane>
                     <columnConstraints>
@@ -63,11 +63,11 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" text="Poprzedni" />
-                              <Button mnemonicParsing="false" text="Następny" GridPane.columnIndex="1" />
+                              <Button fx:id="PreviousExample" mnemonicParsing="false" onAction="#handleButtonActionPreviousExample" text="Poprzedni" />
+                              <Button fx:id="NextExample" mnemonicParsing="false" onAction="#handleButtonActionNextExample" text="Następny" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
-                        <Label text="Brak pliku | Przykład -/-" GridPane.rowIndex="1" />
+                        <Label fx:id="ExamplesCount" text="Brak pliku | Przykład -/-" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -91,38 +91,7 @@
                   <Label text="bity kodu Bergera?" />
                   <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
                      <content>
-                        <HBox prefHeight="33.0" prefWidth="665.0">
-                           <children>
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                           </children>
-                        </HBox>
+                        <HBox prefHeight="33.0" prefWidth="665.0" />
                      </content>
                   </ScrollPane>
                </children>
@@ -139,54 +108,7 @@
                   <Label text="Prezentowanie N-bitów danych" />
                   <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
                      <content>
-                        <HBox prefHeight="34.0" prefWidth="1018.0">
-                           <children>
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                              <Button mnemonicParsing="false" text="0" />
-                           </children>
-                        </HBox>
+                        <HBox prefHeight="34.0" prefWidth="1018.0" />
                      </content>
                   </ScrollPane>
                </children>

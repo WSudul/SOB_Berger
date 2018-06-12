@@ -1,6 +1,7 @@
 import berger.CheckBits;
 import berger.CodeWord;
 
+import java.net.URL;
 import java.util.*;
 
 import berger.BergerCode;
@@ -13,26 +14,44 @@ import io.DataInput;
 import io.DataReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import report.Record;
 import report.Report;
-public class Controller {
+public class Controller implements Initializable{
 
 
     private List<BergerCode> bergerCodes=new ArrayList<>();
+    private static char[] currentExample;
+    private static List<DataInput> dataInputs;
+    private static int indexOfExamples;
+    public Controller(){
+        dataInputs = null;
+        indexOfExamples = 0;
+        currentExample = null;
+    }
 
     @FXML
-    private Button Bit1, LoadFile, preset1,preset2,preset3,preset4;
+    private ArrayList<Button> buttons;
+    @FXML
+    private Button LoadFile, preset1,preset2,preset3,preset4, PreviousExample, NextExample, GenerateRaport;
 
     @FXML
-    private Label Output;
+    private Label Output, ExamplesCount;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
         Output.setText("Button Action\n");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PreviousExample.setVisible(false);
+        NextExample.setVisible(false);
+        ExamplesCount.setVisible(false);
     }
 
     @FXML
@@ -85,6 +104,7 @@ public class Controller {
     }
 
 
+
     private BergerCode PresetMultipleMixed(BergerCode bergerCode) {
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
@@ -118,8 +138,7 @@ public class Controller {
     }
 
 
-    public void handleButtonActionLoadFromFile(ActionEvent actionEvent) {
-        List<DataInput> dataInputs = null;
+    public void handleButtonActionLoadFromFile(ActionEvent actionEvent) throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Wybierz plik");
         File file = chooser.showOpenDialog(new Stage());
@@ -128,7 +147,29 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        char[] arr = dataInputs.get(3).getData().toCharArray();
-        System.out.println(arr);
+        ExamplesCount.setText(indexOfExamples + "/" + (dataInputs.size()-1));
+        PreviousExample.setVisible(true);
+        NextExample.setVisible(true);
+        ExamplesCount.setVisible(true);
+        currentExample = dataInputs.get(indexOfExamples).getData().toCharArray();
+        System.out.println(currentExample);
+    }
+
+    public void handleButtonActionPreviousExample(ActionEvent actionEvent) {
+        if(indexOfExamples > 0) {
+        indexOfExamples--;
+        ExamplesCount.setText(indexOfExamples + "/" + (dataInputs.size()-1));
+        currentExample = dataInputs.get(indexOfExamples).getData().toCharArray();
+        System.out.println(currentExample);
+        }
+    }
+
+    public void handleButtonActionNextExample(ActionEvent actionEvent) {
+        if(indexOfExamples < (dataInputs.size()-1)) {
+            indexOfExamples++;
+            ExamplesCount.setText(indexOfExamples + "/" + (dataInputs.size()-1));
+            currentExample = dataInputs.get(indexOfExamples).getData().toCharArray();
+            System.out.println(currentExample);
+        }
     }
 }
