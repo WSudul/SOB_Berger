@@ -2,10 +2,6 @@ import berger.BergerCode;
 import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
-
-import java.net.URL;
-import java.util.*;
-
 import io.ChangeType;
 import io.DataInput;
 import io.DataReader;
@@ -22,6 +18,7 @@ import report.Report;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URL;
 import java.util.*;
 import java.util.function.Function;
 
@@ -211,6 +208,14 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        bergerCodes.clear();
+        for (DataInput dataInput : dataInputs) {
+            System.out.println("dataInput: " + dataInput.getType() + " " + dataInput.getData());
+            BergerCode bergerCode = GenerateBergerCode(dataInput);
+            bergerCodes.add(bergerCode);
+        }
+
         ExamplesCount.setText(indexOfExamples + "/" + (dataInputs.size()-1));
         PreviousExample.setVisible(true);
         NextExample.setVisible(true);
@@ -234,13 +239,6 @@ public class Controller implements Initializable {
             ExamplesCount.setText(indexOfExamples + "/" + (dataInputs.size()-1));
             currentExample = dataInputs.get(indexOfExamples).getData().toCharArray();
             System.out.println(currentExample);
-        }
-
-        bergerCodes.clear();
-        for (DataInput dataInput : dataInputs) {
-            System.out.println("dataInput: " + dataInput.getType() + " " + dataInput.getData());
-            BergerCode bergerCode = GenerateBergerCode(dataInput);
-            bergerCodes.add(bergerCode);
         }
 
     }
