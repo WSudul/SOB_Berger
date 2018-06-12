@@ -16,6 +16,7 @@ import report.Report;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 
@@ -46,7 +47,7 @@ public class Controller {
         for(BergerCode bergerCode: bergerCodes)
         {
             int randomNumber = generator.nextInt(kMax)+kMin;
-
+            System.out.println("randomNumber for type: " + randomNumber);
             BergerCode modifiedInstance=createModifiedInstance(bergerCode,randomNumber);
             ChangeType changeType=ChangeType.findByKey(randomNumber);
             Record record=new Record(modifiedInstance,changeType);
@@ -87,8 +88,6 @@ public class Controller {
 
 
     private BergerCode PresetMultipleZeros(BergerCode bergerCode) {
-
-
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
@@ -100,7 +99,6 @@ public class Controller {
 
 
     private BergerCode PresetMultipleOnes(BergerCode bergerCode) {
-
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
@@ -192,7 +190,35 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        char[] arr = dataInputs.get(3).getData().toCharArray();
-        System.out.println(arr);
+
+        bergerCodes.clear();
+        for (DataInput dataInput : dataInputs) {
+            System.out.println("dataInput: " + dataInput.getType() + " " + dataInput.getData());
+            BergerCode bergerCode = GenerateBergerCode(dataInput);
+            bergerCodes.add(bergerCode);
+        }
+
+    }
+
+    private BergerCode GenerateBergerCode(DataInput dataInput) {
+        BergerCode bergerCode;
+        switch (dataInput.getType()) {
+            case INT:
+                bergerCode = new BergerCode(Integer.parseInt(dataInput.getData()));
+                break;
+            case LONG:
+                bergerCode = new BergerCode(Long.parseLong(dataInput.getData()));
+                break;
+            case STRING:
+                bergerCode = new BergerCode(dataInput.getData());
+                break;
+            case BYTES:
+                BigInteger bigInteger = new BigInteger(dataInput.getData());
+                bergerCode = new BergerCode(bigInteger.toByteArray());
+                break;
+            default:
+                return null;
+        }
+        return bergerCode;
     }
 }
