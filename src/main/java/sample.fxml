@@ -3,14 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <GridPane layoutX="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="789.0">
          <columnConstraints>
@@ -24,7 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <GridPane GridPane.rowIndex="3">
+            <GridPane fx:id="outputTextArea" GridPane.rowIndex="3">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,9 +41,35 @@
                         <Insets left="75.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Button mnemonicParsing="false" text="Wczytaj z pliku" />
                   <Button mnemonicParsing="false" text="Generuj Raport" GridPane.columnIndex="1" />
-                  <Label text="Komunikaty wyjściowe" GridPane.columnIndex="2" />
+                  <Label fx:id="Output" text="Komunikaty wyjściowe" GridPane.columnIndex="2" />
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="47.599951171875" minHeight="10.0" prefHeight="40.80001220703125" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="47.599951171875" minHeight="10.0" prefHeight="41.199971771240236" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="75.60001220703126" minHeight="10.0" prefHeight="37.20002822875976" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" text="Wczytaj z pliku" />
+                        <GridPane prefHeight="28.0" prefWidth="170.0" GridPane.rowIndex="2">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" text="Poprzedni" />
+                              <Button mnemonicParsing="false" text="Następny" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Label text="Brak pliku | Przykład -/-" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
                </children>
                <opaqueInsets>
                   <Insets left="75.0" />
@@ -58,122 +85,46 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="104.8" minHeight="10.0" prefHeight="85.20001831054688" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <GridPane prefHeight="82.0" prefWidth="686.0" GridPane.rowIndex="1">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <GridPane>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.rowIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </GridPane>
                   <Label text="bity kodu Bergera?" />
+                  <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
+                     <content>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </GridPane>
             <GridPane GridPane.rowIndex="1">
@@ -182,122 +133,62 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="104.8" minHeight="10.0" prefHeight="85.20001831054688" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane prefHeight="82.0" prefWidth="686.0" GridPane.rowIndex="1">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <GridPane>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.rowIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="6" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="1" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="5" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="4" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="3" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="2" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIME" height="15.0" stroke="BLACK" strokeType="INSIDE" width="10.0" GridPane.columnIndex="7" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </GridPane>
                   <Label text="Prezentowanie N-bitów danych" />
+                  <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
+                     <content>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                              <Button mnemonicParsing="false" text="0" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </GridPane>
          </children>

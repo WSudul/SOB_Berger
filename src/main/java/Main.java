@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/sample.fxml").toURI().toURL());
         Parent root = loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Berger Code");
         primaryStage.setScene(new Scene(root, 800, 450));
         primaryStage.show();
     }
