@@ -19,6 +19,10 @@ public class BergerCode {
 
     }
 
+    public BergerCode(String string) {
+        this(string.getBytes());
+    }
+
     public BergerCode(ByteBuffer buffer){
         this(buffer.array());
     }
@@ -74,4 +78,13 @@ public class BergerCode {
 
     private CodeWord codeWord;
     private CheckBits checkBits;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("BergerCode{");
+        sb.append("codeWord=").append(codeWord);
+        sb.append(", checkBits=").append(checkBits);
+        sb.append('}');
+        return sb.toString();
+    }
 }

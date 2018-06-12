@@ -83,4 +83,13 @@ abstract class BitContainer implements BitContainerInterface {
         return (index >= 0 && index < size_);
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("BitContainer{");
+        sb.append("bitContainer_=").append(bitContainer_);
+        sb.append(", size_=").append(size_);
+        sb.append('}');
+        return sb.toString();
+    }
+
 }

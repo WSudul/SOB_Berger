@@ -33,7 +33,7 @@ public class Record {
         final StringBuilder sb = new StringBuilder("Record{");
 
         sb.append("\ttimestamp=").append(timestamp);
-        sb.append("\n\tmodifiedBergerCode=").append(modifiedBergerCode);
+        sb.append("\n\tmodifiedBergerCode=").append(modifiedBergerCode.toString());
         sb.append("\n\tchangeType=").append(changeType);
         sb.append("\n\tisErrorDetected=").append(isErrorDetected());
         sb.append("\n}");

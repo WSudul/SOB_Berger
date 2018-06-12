@@ -28,5 +28,5 @@ public class CodeWord extends BitContainer {
         }
         return value;
     }
-
+    
 }
