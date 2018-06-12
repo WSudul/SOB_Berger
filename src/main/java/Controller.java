@@ -1,4 +1,5 @@
 import berger.BergerCode;
+import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
 import io.ChangeType;
@@ -10,6 +11,7 @@ import report.Record;
 import report.Report;
 
 import java.util.*;
+import java.util.function.Function;
 
 
 public class Controller {
@@ -63,10 +65,10 @@ public class Controller {
                 //preset 2;
                 break;
             case 3:
-                //preset 3;
+                PresetMultipleZeros(modifiedInstance);
                 break;
             case 4:
-                //preset 4;
+                PresetMultipleOnes(modifiedInstance);
             case 5:
                 PresetMultipleMixed(modifiedInstance);
                 break;
@@ -77,6 +79,70 @@ public class Controller {
         return modifiedInstance;
     }
 
+
+    private BergerCode PresetMultipleZeros(BergerCode bergerCode) {
+
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        SetMultipleOnesToZero(codeWord, 0.50);
+        SetMultipleOnesToZero(checkBits, 0.50);
+
+        return bergerCode;
+    }
+
+
+    private BergerCode PresetMultipleOnes(BergerCode bergerCode) {
+
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        SetMultipleZerosToOnes(codeWord, 0.50);
+        SetMultipleZerosToOnes(checkBits, 0.50);
+
+        return bergerCode;
+    }
+
+    private void SetMultipleOnesToZero(BitContainerInterface bitContainer, double fraction) {
+        Set<Integer> IndexesOfOnes = GetSpecificIndexes(bitContainer, bit -> (bit));
+        Set<Integer> IndexesToBeCleared = SelectIndexes(IndexesOfOnes, (int) (IndexesOfOnes.size() * fraction));
+        for (Integer index : IndexesToBeCleared) {
+            bitContainer.clearBit(index);
+        }
+    }
+
+    private void SetMultipleZerosToOnes(BitContainerInterface bitContainer, double fraction) {
+        Set<Integer> IndexesOfZeros = GetSpecificIndexes(bitContainer, bit -> (!bit));
+        Set<Integer> IndexesToBeSet = SelectIndexes(IndexesOfZeros, (int) (IndexesOfZeros.size() * fraction));
+        for (Integer index : IndexesToBeSet) {
+            bitContainer.setBit(index);
+        }
+    }
+
+    private Set<Integer> GetSpecificIndexes(BitContainerInterface bitContainer, Function<Boolean, Boolean> function) {
+        Set<Integer> specificIndexes = new TreeSet<>();
+        for (int i = 0; i < bitContainer.length(); ++i) {
+            if (function.apply(bitContainer.getBit(i)))
+                specificIndexes.add(i);
+        }
+        return specificIndexes;
+    }
+
+    private Set<Integer> SelectIndexes(Set<Integer> indexes, int selectSize) {
+        if (selectSize > indexes.size())
+            return null;
+        Random generator = new Random();
+        List<Integer> indexesList = new ArrayList<>(indexes);
+        Set<Integer> selection = new TreeSet<>();
+
+        while (selectSize > 0) {
+            int index = generator.nextInt(indexes.size());
+            selection.add(indexesList.get(index));
+            --selectSize;
+        }
+
+        return selection;
+    }
 
     private BergerCode PresetMultipleMixed(BergerCode bergerCode) {
         CodeWord codeWord = bergerCode.getCodeWord();
