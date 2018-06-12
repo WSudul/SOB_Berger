@@ -1,15 +1,12 @@
+import berger.BergerCode;
+import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
 
 import java.net.URL;
 import java.util.*;
 
-import berger.BergerCode;
 import io.ChangeType;
-
-import java.io.File;
-import java.io.IOException;
-
 import io.DataInput;
 import io.DataReader;
 import javafx.event.ActionEvent;
@@ -21,7 +18,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import report.Record;
 import report.Report;
-public class Controller implements Initializable{
+
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Function;
+
+
+public class Controller implements Initializable {
 
 
     private List<BergerCode> bergerCodes=new ArrayList<>();
@@ -33,6 +36,7 @@ public class Controller implements Initializable{
         indexOfExamples = 0;
         currentExample = null;
     }
+    private Random generator = new Random(); //temporary - will be updated with random seed
 
     @FXML
     private ArrayList<Button> buttons;
@@ -60,7 +64,6 @@ public class Controller implements Initializable{
         final int kMax=5;
         Report report=new Report();
 
-        Random generator = new Random();
         for(BergerCode bergerCode: bergerCodes)
         {
             int randomNumber = generator.nextInt(kMax)+kMin;
@@ -89,10 +92,10 @@ public class Controller implements Initializable{
                 //preset 2;
                 break;
             case 3:
-                //preset 3;
+                PresetMultipleZeros(modifiedInstance);
                 break;
             case 4:
-                //preset 4;
+                PresetMultipleOnes(modifiedInstance);
             case 5:
                 PresetMultipleMixed(modifiedInstance);
                 break;
@@ -104,13 +107,76 @@ public class Controller implements Initializable{
     }
 
 
+    private BergerCode PresetMultipleZeros(BergerCode bergerCode) {
+
+
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        SetMultipleOnesToZero(codeWord, generator.nextDouble() / 2.0);
+        SetMultipleOnesToZero(checkBits, generator.nextDouble() / 2.0);
+
+        return bergerCode;
+    }
+
+
+    private BergerCode PresetMultipleOnes(BergerCode bergerCode) {
+
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        SetMultipleZerosToOnes(codeWord, generator.nextDouble() / 2.0);
+        SetMultipleZerosToOnes(checkBits, generator.nextDouble() / 2.0);
+
+        return bergerCode;
+    }
+
+    private void SetMultipleOnesToZero(BitContainerInterface bitContainer, double fraction) {
+        Set<Integer> IndexesOfOnes = GetSpecificIndexes(bitContainer, bit -> (bit));
+        Set<Integer> IndexesToBeCleared = SelectIndexes(IndexesOfOnes, (int) (IndexesOfOnes.size() * fraction));
+        for (Integer index : IndexesToBeCleared) {
+            bitContainer.clearBit(index);
+        }
+    }
+
+    private void SetMultipleZerosToOnes(BitContainerInterface bitContainer, double fraction) {
+        Set<Integer> IndexesOfZeros = GetSpecificIndexes(bitContainer, bit -> (!bit));
+        Set<Integer> IndexesToBeSet = SelectIndexes(IndexesOfZeros, (int) (IndexesOfZeros.size() * fraction));
+        for (Integer index : IndexesToBeSet) {
+            bitContainer.setBit(index);
+        }
+    }
+
+    private Set<Integer> GetSpecificIndexes(BitContainerInterface bitContainer, Function<Boolean, Boolean> function) {
+        Set<Integer> specificIndexes = new TreeSet<>();
+        for (int i = 0; i < bitContainer.length(); ++i) {
+            if (function.apply(bitContainer.getBit(i)))
+                specificIndexes.add(i);
+        }
+        return specificIndexes;
+    }
+
+    private Set<Integer> SelectIndexes(Set<Integer> indexes, int selectSize) {
+        if (selectSize > indexes.size())
+            return null;
+        List<Integer> indexesList = new ArrayList<>(indexes);
+        Set<Integer> selection = new TreeSet<>();
+
+        while (selectSize > 0) {
+            int index = generator.nextInt(indexes.size());
+            selection.add(indexesList.get(index));
+            --selectSize;
+        }
+
+        return selection;
+    }
 
     private BergerCode PresetMultipleMixed(BergerCode bergerCode) {
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
         final int totalLength = codeWord.length() + checkBits.length();
-        final int numberOfBitsToFlip = totalLength / 2;
+        final int numberOfBitsToFlip = (totalLength / 10) + generator.nextInt(totalLength / 2);
 
         Set<Integer> uniqueIndexes = GenerateUniqueIndexes(numberOfBitsToFlip,totalLength);
 
@@ -128,7 +194,6 @@ public class Controller implements Initializable{
     }
 
     private Set<Integer> GenerateUniqueIndexes(int n, int maxIndex){
-        Random generator = new Random();
         Set<Integer> uniqueIndexes =new TreeSet<>();
         while (uniqueIndexes.size() < n) {
             int index = generator.nextInt(maxIndex);
