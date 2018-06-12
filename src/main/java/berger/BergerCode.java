@@ -19,6 +19,10 @@ public class BergerCode {
 
     }
 
+    public BergerCode(String string) {
+        this(string.getBytes());
+    }
+
     public BergerCode(ByteBuffer buffer){
         this(buffer.array());
     }
