@@ -1,16 +1,15 @@
 import berger.BergerCode;
+import berger.CheckBits;
+import berger.CodeWord;
 import io.ChangeType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import report.Record;
 import report.Report;
+
+import java.util.*;
 
 
 public class Controller {
@@ -69,7 +68,7 @@ public class Controller {
             case 4:
                 //preset 4;
             case 5:
-                //preset 5?;
+                PresetMultipleMixed(modifiedInstance);
                 break;
             default:
                 break;
@@ -77,5 +76,39 @@ public class Controller {
 
         return modifiedInstance;
     }
+
+
+    private BergerCode PresetMultipleMixed(BergerCode bergerCode) {
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        final int totalLength = codeWord.length() + checkBits.length();
+        final int numberOfBitsToFlip = totalLength / 2;
+
+        Set<Integer> uniqueIndexes = GenerateUniqueIndexes(numberOfBitsToFlip,totalLength);
+
+        final int codeWordMaxIndex = codeWord.length() - 1;
+        final int offset=codeWord.length();
+        for (Integer index : uniqueIndexes) {
+            if (index > codeWordMaxIndex) {
+                checkBits.flipBit(index - offset);
+            } else
+                codeWord.flipBit(index);
+
+        }
+        return bergerCode;
+
+    }
+
+    private Set<Integer> GenerateUniqueIndexes(int n, int maxIndex){
+        Random generator = new Random();
+        Set<Integer> uniqueIndexes =new TreeSet<>();
+        while (uniqueIndexes.size() < n) {
+            int index = generator.nextInt(maxIndex);
+            uniqueIndexes.add(index);
+        }
+        return uniqueIndexes;
+    }
+
 
 }
