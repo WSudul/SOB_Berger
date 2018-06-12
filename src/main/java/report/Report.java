@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Report {
@@ -28,7 +29,9 @@ public class Report {
     }
 
     public boolean exportToFile(String fileName) {
-        Path file = Paths.get(fileName + "_" + timestamp.toString());
+
+        String stringTimestamp=timestamp.truncatedTo(ChronoUnit.SECONDS).toString();
+        Path file = Paths.get(fileName + "_" + stringTimestamp.replaceAll("[:-]","-"));
         try {
             Files.createFile(file);
             Files.write(file, this.toString().getBytes());
