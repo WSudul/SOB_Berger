@@ -2,11 +2,23 @@ import berger.BergerCode;
 import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
+
+import java.util.*;
+
+import berger.BergerCode;
 import io.ChangeType;
+
+import java.io.File;
+import java.io.IOException;
+
+import io.DataInput;
+import io.DataReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import report.Record;
 import report.Report;
 
@@ -20,7 +32,7 @@ public class Controller {
     private List<BergerCode> bergerCodes=new ArrayList<>();
 
     @FXML
-    private Button Bit1;
+    private Button Bit1, LoadFile, preset1,preset2,preset3,preset4;
 
     @FXML
     private Label Output;
@@ -177,4 +189,17 @@ public class Controller {
     }
 
 
+    public void handleButtonActionLoadFromFile(ActionEvent actionEvent) {
+        List<DataInput> dataInputs = null;
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Wybierz plik");
+        File file = chooser.showOpenDialog(new Stage());
+        try {
+            dataInputs = DataReader.readJsonData(file.getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        char[] arr = dataInputs.get(3).getData().toCharArray();
+        System.out.println(arr);
+    }
 }
