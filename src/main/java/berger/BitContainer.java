@@ -63,6 +63,14 @@ abstract class BitContainer implements BitContainerInterface {
     }
 
     @Override
+    public Boolean getBit(int index) {
+        if (isIndexValid(index)) {
+            return bitContainer_.get(index);
+        } else
+            return null;
+    }
+
+    @Override
     public List<Boolean> toList() {
         List<Boolean> list = new ArrayList<>();
         for (int i = 0; i < size_; ++i) {
