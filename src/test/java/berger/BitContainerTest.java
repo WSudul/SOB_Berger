@@ -130,6 +130,24 @@ public class BitContainerTest {
         assertFalse(bitContainer.clearBit(badIndex));
     }
 
+    @Test
+    public void getBit() throws Exception {
+        BitContainer bitContainer = new BitContainerTestable(containerSize);
+        assertTrue(bitContainer.setBit(0));
+        assertTrue(bitContainer.setBit(2));
+
+        assertTrue(bitContainer.getBit(0));
+        assertFalse(bitContainer.getBit(1));
+        assertTrue(bitContainer.getBit(2));
+    }
+
+    @Test
+    public void getBitReturnsNullOnInvalidIndex() throws Exception {
+        BitContainer bitContainer = new BitContainerTestable(containerSize);
+        int kErrorIndex = 99999;
+        assertNull(bitContainer.getBit(kErrorIndex));
+
+    }
 
     class BitContainerTestable extends BitContainer {
         BitContainerTestable(int size) {
