@@ -1,4 +1,5 @@
 import berger.BergerCode;
+import berger.BitContainerInterface;
 import io.ChangeType;
 import io.DataInput;
 import io.DataReader;
@@ -132,20 +133,14 @@ public class Controller {
         }
     }
 
-    private class MyEventHandler implements EventHandler<Event>{
-        @Override
-        public void handle(Event evt) {
-            String id = ((Control)evt.getSource()).getId();
-          //  Button button = (Button) scene.lookup("#" + id);
-            System.out.println(((Control)evt.getSource()).getId());
-        }
-    }
+    final String kKuttonCodeWordName = "buttonCodeWord";
+    final String kKuttonCheckBitsName = "buttonCheckBits";
 
     public void sethBox(){
         hBox1.getChildren().clear();
         hBox2.getChildren().clear();
 
-        int numberOfButtons = currentExampleBerger.getCodeWord().toList().size();
+        int numberOfButtons = currentExampleBerger.getCodeWord().length();
         Button[] buttons = new Button[numberOfButtons];
 
         for(int i = 0; i<numberOfButtons;i++){
@@ -180,6 +175,35 @@ public class Controller {
 
         }
         hBox2.getChildren().addAll(buttons2);
+    }
+
+    private class MyEventHandler implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            Control control = (Control) evt.getSource();
+            String objectId = control.getId();
+
+            BitContainerInterface bitContainer;
+
+            //  Button button = (Button) scene.lookup("#" + id);
+            System.out.println(control.getId());
+
+
+            int indexToFlip;
+            if (objectId.startsWith(kKuttonCodeWordName)) {
+                indexToFlip = Integer.parseInt(control.getId().replace(kKuttonCodeWordName, ""));
+                bitContainer = currentExampleBerger.getCodeWord();
+            } else {
+                indexToFlip = Integer.parseInt(control.getId().replace(kKuttonCheckBitsName, ""));
+                bitContainer = currentExampleBerger.getCheckBits();
+            }
+
+            Button lookup = (Button) control.getScene().lookup("#" + objectId);
+            lookup.setText((lookup.getText().equals("1")) ? "0" : "1");
+            if (!bitContainer.flipBit(indexToFlip))
+                System.out.println("error while flipping");
+            System.out.println(bitContainer.toList());
+        }
     }
 
     public void handleButtonActionPreviousExample(ActionEvent actionEvent) {
