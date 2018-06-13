@@ -2,8 +2,6 @@ package presets;
 
 import berger.BergerCode;
 import berger.BitContainerInterface;
-import berger.CheckBits;
-import berger.CodeWord;
 
 import java.util.*;
 import java.util.function.Function;
@@ -28,8 +26,8 @@ public class Preset {
     private static void ChangeSingleBit(BergerCode bergerCode, Function<Boolean, Boolean> function, boolean
             targetValue) {
 
-        CodeWord codeWord = bergerCode.getCodeWord();
-        CheckBits checkBits = bergerCode.getCheckBits();
+        BitContainerInterface codeWord = bergerCode.getCodeWord();
+        BitContainerInterface checkBits = bergerCode.getCheckBits();
 
         Set<Integer> IndexesOfOnesCodeWord = GetSpecificIndexes(codeWord, function);
         Set<Integer> IndexesOfOnesCheckBits = GetSpecificIndexes(checkBits, function);
@@ -59,8 +57,8 @@ public class Preset {
     }
 
     public static BergerCode PresetMultipleZeros(BergerCode bergerCode) {
-        CodeWord codeWord = bergerCode.getCodeWord();
-        CheckBits checkBits = bergerCode.getCheckBits();
+        BitContainerInterface codeWord = bergerCode.getCodeWord();
+        BitContainerInterface checkBits = bergerCode.getCheckBits();
 
         SetMultipleOnesToZero(codeWord, generator.nextDouble());
         SetMultipleOnesToZero(checkBits, generator.nextDouble());
@@ -70,8 +68,8 @@ public class Preset {
 
     public static BergerCode PresetMultipleOnes(BergerCode bergerCode) {
 
-        CodeWord codeWord = bergerCode.getCodeWord();
-        CheckBits checkBits = bergerCode.getCheckBits();
+        BitContainerInterface codeWord = bergerCode.getCodeWord();
+        BitContainerInterface checkBits = bergerCode.getCheckBits();
 
         SetMultipleZerosToOnes(codeWord, generator.nextDouble());
         SetMultipleZerosToOnes(checkBits, generator.nextDouble());
@@ -80,8 +78,8 @@ public class Preset {
     }
 
     public static BergerCode PresetMultipleMixed(BergerCode bergerCode) {
-        CodeWord codeWord = bergerCode.getCodeWord();
-        CheckBits checkBits = bergerCode.getCheckBits();
+        BitContainerInterface codeWord = bergerCode.getCodeWord();
+        BitContainerInterface checkBits = bergerCode.getCheckBits();
 
         final int totalLength = codeWord.length() + checkBits.length();
         final int min = (totalLength / 8);

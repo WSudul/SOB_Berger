@@ -41,11 +41,11 @@ public class BergerCode {
     }
 
 
-    public CodeWord getCodeWord() {
+    public BitContainerInterface getCodeWord() {
         return codeWord;
     }
 
-    public CheckBits getCheckBits() {
+    public BitContainerInterface getCheckBits() {
         return checkBits;
     }
 

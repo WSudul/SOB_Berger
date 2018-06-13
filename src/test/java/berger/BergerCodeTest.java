@@ -19,14 +19,14 @@ public class BergerCodeTest {
 
     @Test
     public void getCodeWord() throws Exception {
-        CodeWord codeWord = bergerCode.getCodeWord();
+        BitContainerInterface codeWord = bergerCode.getCodeWord();
         assertNotNull(codeWord);
         assertEquals(binaryRepresentationSize1, codeWord.length());
     }
 
     @Test
     public void getCheckBits() throws Exception {
-        CheckBits checkBits = bergerCode.getCheckBits();
+        BitContainerInterface checkBits = bergerCode.getCheckBits();
         assertNotNull(checkBits);
         assertEquals(checkBitsSize1, checkBits.length());
     }
