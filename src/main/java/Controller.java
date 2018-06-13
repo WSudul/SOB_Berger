@@ -58,7 +58,7 @@ public class Controller {
         for(BergerCode bergerCode: bergerCodes)
         {
             int randomNumber = generator.nextInt(kMax)+kMin;
-            System.out.println("randomNumber for type: " + randomNumber);
+            System.out.println("randomNumber for preset: " + randomNumber);
             BergerCode modifiedInstance=createModifiedInstance(bergerCode,randomNumber);
             ChangeType changeType=ChangeType.findByKey(randomNumber);
             Record record=new Record(modifiedInstance,changeType);
@@ -72,13 +72,12 @@ public class Controller {
     private BergerCode createModifiedInstance(BergerCode bergerCode, int preset){
         BergerCode modifiedInstance = new BergerCode(bergerCode);
 
-        //todo select preset
         switch (preset) {
             case 1:
-                //preset1
+                PresetSingleZero(modifiedInstance);
                 break;
             case 2:
-                //preset 2;
+                PresetSingleOne(modifiedInstance);
                 break;
             case 3:
                 PresetMultipleZeros(modifiedInstance);

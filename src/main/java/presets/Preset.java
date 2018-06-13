@@ -7,14 +7,58 @@ import berger.CodeWord;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Preset {
 
     private static Random generator = new Random();
 
+    public static BergerCode PresetSingleZero(BergerCode bergerCode) {
+        ChangeSingleBit(bergerCode, (bit) -> bit, false);
+        return bergerCode;
+    }
+
+
+    public static BergerCode PresetSingleOne(BergerCode bergerCode) {
+        ChangeSingleBit(bergerCode, (bit) -> !bit, true);
+
+        return bergerCode;
+    }
+
+    private static void ChangeSingleBit(BergerCode bergerCode, Function<Boolean, Boolean> function, boolean
+            targetValue) {
+
+        CodeWord codeWord = bergerCode.getCodeWord();
+        CheckBits checkBits = bergerCode.getCheckBits();
+
+        Set<Integer> IndexesOfOnesCodeWord = GetSpecificIndexes(codeWord, function);
+        Set<Integer> IndexesOfOnesCheckBits = GetSpecificIndexes(checkBits, function);
+
+        boolean useCodeWord = generator.nextBoolean();
+        BitContainerInterface choseContainer;
+        Set<Integer> indexesOfOnes;
+        if (IndexesOfOnesCodeWord.isEmpty() && IndexesOfOnesCheckBits.isEmpty()) {
+            System.out.println("No bits with desired value are presnent");
+            return;
+        } else if (useCodeWord) {
+            choseContainer = codeWord;
+            indexesOfOnes = IndexesOfOnesCodeWord;
+        } else {
+
+            choseContainer = checkBits;
+            indexesOfOnes = IndexesOfOnesCheckBits;
+        }
+        int randomInt = generator.nextInt(indexesOfOnes.size());
+        int randomIndex = indexesOfOnes.stream().collect(Collectors.toList()).get(randomInt);
+
+        if (targetValue)
+            choseContainer.setBit(randomIndex);
+        else
+            choseContainer.clearBit(randomIndex);
+
+    }
+
     public static BergerCode PresetMultipleZeros(BergerCode bergerCode) {
-
-
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
