@@ -9,10 +9,16 @@ import io.ChangeType;
 import io.DataInput;
 import io.DataReader;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import report.Record;
@@ -25,7 +31,6 @@ import java.util.function.Function;
 
 public class Controller {
 
-
     private List<BergerCode> bergerCodes=new ArrayList<>();
     private static BergerCode currentExampleBerger;
     private static int indexOfExamples;
@@ -36,7 +41,7 @@ public class Controller {
     private Random generator = new Random(); //temporary - will be updated with random seed
 
     @FXML
-    private ArrayList<Button> buttons;
+    private static ArrayList<Button> buttons;
 
     @FXML
     private Button LoadFile, preset1,preset2,preset3,preset4, PreviousExample, NextExample, GenerateRaport;
@@ -46,11 +51,6 @@ public class Controller {
 
     @FXML
     private HBox hBox1, hBox2;
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("Button clicked ");
-    }
 
     @FXML
     private void handleButtonActionGenerateReport(ActionEvent event){
@@ -230,24 +230,54 @@ public class Controller {
         }
     }
 
+    private class MyEventHandler implements EventHandler<Event>{
+        @Override
+        public void handle(Event evt) {
+            String id = ((Control)evt.getSource()).getId();
+          //  Button button = (Button) scene.lookup("#" + id);
+            System.out.println(((Control)evt.getSource()).getId());
+        }
+    }
+
     public void sethBox(){
         hBox1.getChildren().clear();
         hBox2.getChildren().clear();
+
         int numberOfButtons = currentExampleBerger.getCodeWord().toList().size();
         Button[] buttons = new Button[numberOfButtons];
+
         for(int i = 0; i<numberOfButtons;i++){
+
             buttons[i] = new Button();
+
+            buttons[i].setUserData(i);
+
+            buttons[i].setId("buttonCodeWord" + i);
+
+            buttons[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
+
             buttons[i].setText("" + (currentExampleBerger.getCodeWord().toList().get(i).toString().equals("false")? "0": "1"));
+
         }
         hBox1.getChildren().addAll(buttons);
 
-        numberOfButtons = currentExampleBerger.getCheckBits().toList().size();
-        buttons = new Button[numberOfButtons];
-        for(int i = 0; i<numberOfButtons;i++){
-            buttons[i] = new Button();
-            buttons[i].setText("" + (currentExampleBerger.getCodeWord().toList().get(i).toString().equals("false")? "0": "1"));
+        int numberOfButtons2 = currentExampleBerger.getCheckBits().toList().size();
+        Button[] buttons2 = new Button[numberOfButtons2];
+
+        for(int i = 0; i<numberOfButtons2;i++){
+
+            buttons2[i] = new Button();
+
+            buttons2[i].setUserData(i);
+
+            buttons2[i].setId("buttonCheckBits" + i);
+
+            buttons2[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
+
+            buttons2[i].setText("" + (currentExampleBerger.getCheckBits().toList().get(i).toString().equals("false")? "0": "1"));
+
         }
-        hBox2.getChildren().addAll(buttons);
+        hBox2.getChildren().addAll(buttons2);
     }
 
     public void handleButtonActionPreviousExample(ActionEvent actionEvent) {
