@@ -29,6 +29,7 @@ import static presets.Preset.*;
 public class Controller {
 
     private List<BergerCode> bergerCodes=new ArrayList<>();
+    private List<DataInput> dataInputs = new ArrayList<>(); //original loaded data
     private static BergerCode currentExampleBerger;
     private static int indexOfExamples;
 
@@ -55,8 +56,9 @@ public class Controller {
         final int kMax=5;
         Report report=new Report();
 
-        for(BergerCode bergerCode: bergerCodes)
+        for (DataInput dataInput : dataInputs)
         {
+            BergerCode bergerCode = GenerateBergerCode(dataInput);
             int randomNumber = generator.nextInt(kMax)+kMin;
             System.out.println("randomNumber for preset: " + randomNumber);
             BergerCode modifiedInstance=createModifiedInstance(bergerCode,randomNumber);
@@ -95,14 +97,11 @@ public class Controller {
     }
 
 
-
-
     public void handleButtonActionLoadFromFile(ActionEvent actionEvent) throws IOException {
         //Chosing File
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Wybierz plik");
         File file = chooser.showOpenDialog(new Stage());
-        List<DataInput> dataInputs;
 
         try {
             dataInputs = DataReader.readJsonData(file.getCanonicalPath());
