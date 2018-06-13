@@ -2,6 +2,9 @@ import berger.BergerCode;
 import berger.BitContainerInterface;
 import berger.CheckBits;
 import berger.CodeWord;
+
+import java.util.*;
+
 import io.ChangeType;
 import io.DataInput;
 import io.DataReader;
@@ -14,11 +17,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import report.Record;
 import report.Report;
-
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.*;
 import java.util.function.Function;
 
 
@@ -99,6 +100,8 @@ public class Controller {
 
 
     private BergerCode PresetMultipleZeros(BergerCode bergerCode) {
+
+
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
@@ -110,6 +113,7 @@ public class Controller {
 
 
     private BergerCode PresetMultipleOnes(BergerCode bergerCode) {
+
         CodeWord codeWord = bergerCode.getCodeWord();
         CheckBits checkBits = bergerCode.getCheckBits();
 
@@ -264,6 +268,7 @@ public class Controller {
             System.out.println(currentExampleBerger.getCodeWord().toList().toString());
             sethBox();
         }
+
     }
 
     private BergerCode GenerateBergerCode(DataInput dataInput) {
@@ -287,5 +292,4 @@ public class Controller {
         }
         return bergerCode;
     }
-
 }
