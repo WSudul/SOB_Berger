@@ -1,9 +1,12 @@
 package berger;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+@JsonSerialize(using = BitContainerSerializer.class)
 abstract class BitContainer implements BitContainerInterface {
 
     protected BitSet bitContainer_;
@@ -86,9 +89,14 @@ abstract class BitContainer implements BitContainerInterface {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BitContainer{");
-        sb.append("bitContainer_=").append(bitContainer_);
-        sb.append(", size_=").append(size_);
-        sb.append('}');
+        sb.append("size= ").append(size_);
+        sb.append(" ,bitContainer= ");
+        sb.append("[");
+        toList().forEach((e) -> {
+            sb.append(e ? "1" : "0");
+        });
+        sb.append("]");
+        sb.append("}");
         return sb.toString();
     }
 

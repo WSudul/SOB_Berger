@@ -1,8 +1,11 @@
 package berger;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.nio.ByteBuffer;
 import java.util.List;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class BergerCode {
 
 
@@ -36,6 +39,7 @@ public class BergerCode {
         this.codeWord = new CodeWord(bergerCode.codeWord);
         this.checkBits = new CheckBits(bergerCode.checkBits);
     }
+
 
     public CodeWord getCodeWord() {
         return codeWord;
@@ -82,9 +86,9 @@ public class BergerCode {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BergerCode{");
-        sb.append("codeWord=").append(codeWord);
-        sb.append(", checkBits=").append(checkBits);
-        sb.append('}');
+        sb.append("codeWord= ").append(codeWord);
+        sb.append(",checkBits= ").append(checkBits);
+        sb.append("}");
         return sb.toString();
     }
 }

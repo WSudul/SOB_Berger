@@ -1,6 +1,10 @@
 package report;
 
 import berger.BergerCode;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +12,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 public class Report {
 
@@ -22,19 +31,30 @@ public class Report {
     }
 
     public boolean addRecord(BergerCode originalData, Record record) {
-        if (null == recordMap.putIfAbsent(originalData, new ArrayList<>(Arrays.asList(record)))) {
-            return recordMap.get(originalData).add(record);
-        } else
-            return true;
+        recordMap.putIfAbsent(originalData, new ArrayList<>());
+        return recordMap.get(originalData).add(record);
+
+    }
+
+    private String serialize(Object obj) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.configure(WRITE_DATES_AS_TIMESTAMPS, true);
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public boolean exportToFile(String fileName) {
 
         String stringTimestamp=timestamp.truncatedTo(ChronoUnit.SECONDS).toString();
-        Path file = Paths.get(fileName + "_" + stringTimestamp.replaceAll("[:-]","-"));
+        Path file = Paths.get(fileName + "_" + stringTimestamp.replaceAll("[:-]", "_"));
         try {
             Files.createFile(file);
-            Files.write(file, this.toString().getBytes());
+            Files.write(file, serialize(this).getBytes());
 
         } catch (IOException e) {
             System.out.println("Exception caught: " + e.getMessage());
@@ -43,18 +63,23 @@ public class Report {
         return true;
     }
 
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Report{");
-        sb.append("\ntimestamp=").append(timestamp);
-        sb.append("\n recordMap=\n");
-        for (Map.Entry<BergerCode, List<Record>> entry : recordMap.entrySet()) {
-            sb.append(entry.getKey()).append("\n");
-            for (Record record : entry.getValue()) {
-                sb.append("Record=").append(record.toString()).append("\n");
-            }
-        }
-        sb.append("\n}");
+        sb.append("timestamp=").append(timestamp);
+        sb.append(", recordMap=").append(recordMap);
+        sb.append('}');
         return sb.toString();
+    }
+
+    @JsonGetter("timestamp")
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    @JsonAnyGetter
+    public Map<BergerCode, List<Record>> getRecordMap() {
+        return recordMap;
     }
 }
