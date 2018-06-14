@@ -19,7 +19,6 @@ import report.Report;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -240,8 +239,9 @@ public class Controller {
                 bergerCode = new BergerCode(dataInput.getData());
                 break;
             case BYTES:
-                BigInteger bigInteger = new BigInteger(dataInput.getData());
-                bergerCode = new BergerCode(bigInteger.toByteArray());
+                List<Boolean> booleans = new ArrayList<>();
+                dataInput.getData().chars().forEachOrdered(ch -> booleans.add(ch == '1'));
+                bergerCode = new BergerCode(booleans);
                 break;
             default:
                 return null;

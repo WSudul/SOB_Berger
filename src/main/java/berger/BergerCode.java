@@ -34,6 +34,11 @@ public class BergerCode {
         Initialize(value);
     }
 
+    public BergerCode(List<Boolean> booleans) {
+        this.codeWord = new CodeWord(booleans);
+        this.checkBits = new CheckBits(codeWord.toList());
+    }
+
     /*Copy ctor which creates deep copy of passed instance */
     public BergerCode(BergerCode bergerCode) {
         this.codeWord = new CodeWord(bergerCode.codeWord);
