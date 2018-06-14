@@ -34,7 +34,7 @@ class CheckBits extends BitContainer {
                     ++count;
             return count;
         } catch (NullPointerException ex) {
-            System.out.println("EXCEPTION CAUGHT: " + ex.toString());
+            System.out.println("EXCEPTION CAUGHT: " + ex.getMessage());
             /* null value ecnountered */
             return null;
         }
