@@ -3,7 +3,7 @@ package berger;
 import java.util.BitSet;
 import java.util.List;
 
-public class CheckBits extends BitContainer {
+class CheckBits extends BitContainer {
 
     public CheckBits(List<Boolean> codeWordList) {
         super.size_ = 0;

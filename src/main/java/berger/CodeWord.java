@@ -3,7 +3,7 @@ package berger;
 import java.util.BitSet;
 import java.util.List;
 
-public class CodeWord extends BitContainer {
+class CodeWord extends BitContainer {
 
 
     public CodeWord(byte[] byte_array) {
