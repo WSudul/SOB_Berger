@@ -12,6 +12,8 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import report.Record;
@@ -46,6 +48,9 @@ public class Controller {
 
     @FXML
     private Label Output, ExamplesCount;
+
+    @FXML
+    private Circle BergerCodeStatus;
 
     @FXML
     private HBox hBox1, hBox2;
@@ -202,7 +207,17 @@ public class Controller {
             if (!bitContainer.flipBit(indexToFlip))
                 System.out.println("error while flipping");
             System.out.println(bitContainer.toList());
+            handleBergerCodeError();
         }
+    }
+
+    void handleBergerCodeError()
+    {
+        if (currentExampleBerger.isErrorDetected())
+            BergerCodeStatus.setFill(Color.RED);
+        else
+            BergerCodeStatus.setFill(Color.GREEN);
+
     }
 
     public void handleButtonActionPreviousExample(ActionEvent actionEvent) {

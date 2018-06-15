@@ -14,6 +14,7 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.setTitle("Berger Code");
         primaryStage.setScene(new Scene(root, 800, 450));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

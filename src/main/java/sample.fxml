@@ -36,7 +36,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Circle fx:id="BergerCodeStatus" radius="42.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3">
+                        <Circle fx:id="BergerCodeStatus" fill="#309c0b" radius="42.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3">
                             <GridPane.margin>
                                 <Insets left="75.0" />
                             </GridPane.margin>
