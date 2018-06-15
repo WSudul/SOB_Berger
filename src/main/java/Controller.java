@@ -3,6 +3,8 @@ import berger.BitContainerInterface;
 import io.ChangeType;
 import io.DataInput;
 import io.DataReader;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,11 +18,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import report.Record;
 import report.Report;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -33,18 +37,21 @@ public class Controller {
     private List<BergerCode> bergerCodes=new ArrayList<>();
     private List<DataInput> dataInputs = new ArrayList<>(); //original loaded data
     private static BergerCode currentExampleBerger;
+    BergerCode currentExampleOriginal; //backup for restart
     private static int indexOfExamples;
 
     public Controller(){
         indexOfExamples = 1;
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
     private Random generator = new Random(); //temporary - will be updated with random seed
 
     @FXML
-    private static ArrayList<Button> buttons;
+    private static Button[] buttons, buttons2;
 
     @FXML
-    private Button LoadFile, preset1,preset2,preset3,preset4, PreviousExample, NextExample, GenerateRaport;
+    private Button LoadFile, reset, preset1,preset2,preset3,preset4, preset5, PreviousExample, NextExample, GenerateRaport;
 
     @FXML
     private Label Output, ExamplesCount;
@@ -101,7 +108,7 @@ public class Controller {
         return modifiedInstance;
     }
 
-
+    @FXML
     public void handleButtonActionLoadFromFile(ActionEvent actionEvent) throws IOException {
         //Chosing File
         FileChooser chooser = new FileChooser();
@@ -120,6 +127,8 @@ public class Controller {
             }
             //Initialize displayed example
             currentExampleBerger = bergerCodes.get(0);
+            currentExampleOriginal = new BergerCode(currentExampleBerger);
+
 
             //Exposing switch-example Menu
             ExamplesCount.setText(indexOfExamples + "/" + bergerCodes.size());
@@ -145,7 +154,7 @@ public class Controller {
         hBox2.getChildren().clear();
 
         int numberOfButtons = currentExampleBerger.getCodeWord().length();
-        Button[] buttons = new Button[numberOfButtons];
+        buttons = new Button[numberOfButtons];
 
         for(int i = 0; i<numberOfButtons;i++){
 
@@ -163,7 +172,7 @@ public class Controller {
         hBox1.getChildren().addAll(buttons);
 
         int numberOfButtons2 = currentExampleBerger.getCheckBits().toList().size();
-        Button[] buttons2 = new Button[numberOfButtons2];
+        buttons2 = new Button[numberOfButtons2];
 
         for(int i = 0; i<numberOfButtons2;i++){
 
@@ -181,6 +190,7 @@ public class Controller {
         hBox2.getChildren().addAll(buttons2);
     }
 
+
     private class MyEventHandler implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
@@ -192,7 +202,6 @@ public class Controller {
             //  Button button = (Button) scene.lookup("#" + id);
             System.out.println(control.getId());
 
-
             int indexToFlip;
             if (objectId.startsWith(kKuttonCodeWordName)) {
                 indexToFlip = Integer.parseInt(control.getId().replace(kKuttonCodeWordName, ""));
@@ -202,24 +211,42 @@ public class Controller {
                 bitContainer = currentExampleBerger.getCheckBits();
             }
 
+            //Change of button text
             Button lookup = (Button) control.getScene().lookup("#" + objectId);
             lookup.setText((lookup.getText().equals("1")) ? "0" : "1");
+
+            //change of bit in Berger code
             if (!bitContainer.flipBit(indexToFlip))
                 System.out.println("error while flipping");
+
             System.out.println(bitContainer.toList());
-            handleBergerCodeError();
         }
     }
 
-    void handleBergerCodeError()
-    {
-        if (currentExampleBerger.isErrorDetected())
-            BergerCodeStatus.setFill(Color.RED);
-        else
-            BergerCodeStatus.setFill(Color.GREEN);
-
+    @FXML
+    private void HandleButtonReset(ActionEvent actionEvent){
+        currentExampleBerger = new BergerCode(currentExampleOriginal);
+        sethBox();
     }
 
+    Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+            handleBergerCodeError();
+        }
+    }));
+
+    private void handleBergerCodeError() {
+        if(currentExampleBerger != null) {
+            if (currentExampleBerger.isErrorDetected())
+                BergerCodeStatus.setFill(Color.RED);
+            else
+                BergerCodeStatus.setFill(Color.GREEN);
+        }
+    }
+
+    @FXML
     public void handleButtonActionPreviousExample(ActionEvent actionEvent) {
         if(indexOfExamples > 1) {
             indexOfExamples--;
@@ -230,6 +257,7 @@ public class Controller {
         }
     }
 
+    @FXML
     public void handleButtonActionNextExample(ActionEvent actionEvent) {
         if(indexOfExamples < bergerCodes.size()) {
             indexOfExamples++;
@@ -262,5 +290,47 @@ public class Controller {
                 return null;
         }
         return bergerCode;
+    }
+
+    private Button getNearest(String value)
+    {
+        //size of pool
+        int sizeOfCode = currentExampleOriginal.getCodeWord().length() + currentExampleBerger.getCheckBits().length();
+        
+        //creating pool
+        for(int i =  0; i<currentExampleOriginal.getCodeWord().length(); i++)
+            ;
+        //buttons[i].getText() + "=" + currentExampleOriginal.getCodeWord().getBit(i));
+        
+        //looking for value inside pool
+        
+        return null;
+    }
+
+    @FXML
+    public void HandleButtonPreset1(ActionEvent actionEvent){
+        //changes single value from 1 to 0
+        getNearest("0");
+    }
+
+    @FXML
+    public void HandleButtonPreset2(ActionEvent actionEvent){
+        //changes single value from 1 to 0
+        getNearest("1");
+    }
+
+    @FXML
+    public void HandleButtonPreset3(ActionEvent actionEvent){
+        //changes multiple values from 0 to 1
+    }
+
+    @FXML
+    public void HandleButtonPreset4(ActionEvent actionEvent){
+        //changes multiple values from 1 to 0
+    }
+
+    @FXML
+    public void HandleButtonPreset5(ActionEvent actionEvent){
+        //changes multiple values, bidirectional
     }
 }

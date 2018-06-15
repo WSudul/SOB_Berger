@@ -13,7 +13,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/sample.fxml").toURI().toURL());
         Parent root = loader.load();
         primaryStage.setTitle("Berger Code");
-        primaryStage.setScene(new Scene(root, 800, 450));
+        primaryStage.setScene(new Scene(root, 794, 418));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
