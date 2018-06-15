@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import presets.Preset;
 import report.Record;
 import report.Report;
 
@@ -292,45 +293,40 @@ public class Controller {
         return bergerCode;
     }
 
-    private Button getNearest(String value)
-    {
-        //size of pool
-        int sizeOfCode = currentExampleOriginal.getCodeWord().length() + currentExampleBerger.getCheckBits().length();
-        
-        //creating pool
-        for(int i =  0; i<currentExampleOriginal.getCodeWord().length(); i++)
-            ;
-        //buttons[i].getText() + "=" + currentExampleOriginal.getCodeWord().getBit(i));
-        
-        //looking for value inside pool
-        
-        return null;
-    }
+    private Preset preset = new Preset();
 
     @FXML
     public void HandleButtonPreset1(ActionEvent actionEvent){
         //changes single value from 1 to 0
-        getNearest("0");
+        currentExampleBerger = createModifiedInstance(currentExampleBerger,1);
+        sethBox();
     }
 
     @FXML
     public void HandleButtonPreset2(ActionEvent actionEvent){
         //changes single value from 1 to 0
-        getNearest("1");
+        currentExampleBerger = createModifiedInstance(currentExampleBerger,2);
+        sethBox();
     }
 
     @FXML
     public void HandleButtonPreset3(ActionEvent actionEvent){
         //changes multiple values from 0 to 1
+        currentExampleBerger = createModifiedInstance(currentExampleBerger,3);
+        sethBox();
     }
 
     @FXML
     public void HandleButtonPreset4(ActionEvent actionEvent){
         //changes multiple values from 1 to 0
+        currentExampleBerger = createModifiedInstance(currentExampleBerger,4);
+        sethBox();
     }
 
     @FXML
     public void HandleButtonPreset5(ActionEvent actionEvent){
         //changes multiple values, bidirectional
+        currentExampleBerger = createModifiedInstance(currentExampleBerger,5);
+        sethBox();
     }
 }
