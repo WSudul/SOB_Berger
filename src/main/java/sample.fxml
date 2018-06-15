@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
-
-<Pane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="794.0" style="-fx-border-color: black;"
+      xmlns="http://javafx.com/javafx/9.0.1" fx:controller="Controller">
     <children>
-        <GridPane layoutX="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="789.0">
+        <GridPane layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="418.0" prefWidth="794.0" style="-fx-border-width: 1;">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="677.0" minWidth="10.0" prefWidth="674.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="108.0" />
@@ -26,17 +22,23 @@
             <children>
                 <GridPane fx:id="outputTextArea" GridPane.rowIndex="2">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.20001220703125" minWidth="10.0" prefWidth="112.99999237060547" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.2000198364258" minWidth="10.0" prefWidth="117.8000122070313" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.39995117187505" minWidth="10.0" prefWidth="416.9999877929688" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.20001220703125" minWidth="10.0"
+                                           prefWidth="143.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.2000198364258" minWidth="10.0"
+                                           prefWidth="118.19999999999999"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="430.9999633789063" minWidth="10.0"
+                                           prefWidth="281.20001220703125"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.39995117187505" minWidth="10.0"
+                                           prefWidth="135.60004272460935"/>
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="GenerateRaport" mnemonicParsing="false" onAction="#handleButtonActionGenerateReport" text="Generuj Raport" GridPane.columnIndex="1" />
-                        <Label fx:id="Output" prefHeight="140.0" prefWidth="267.0" style="-fx-background-color: white; -fx-border-color: black;" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-                        <GridPane prefHeight="140.0" prefWidth="142.0">
+                        <Button fx:id="GenerateRaport" mnemonicParsing="false"
+                                onAction="#handleButtonActionGenerateReport" text="Generuj Raport" visible="false"
+                                GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                        <GridPane prefHeight="140.0" prefWidth="149.0" style="-fx-background-color: Gray;">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
@@ -46,7 +48,9 @@
                                 <RowConstraints maxHeight="75.60001220703126" minHeight="10.0" prefHeight="37.20002822875976" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="LoadFile" mnemonicParsing="false" onAction="#handleButtonActionLoadFromFile" text="Wczytaj z pliku" />
+                                <Button fx:id="LoadFile" mnemonicParsing="false"
+                                        onAction="#handleButtonActionLoadFromFile" text="Wczytaj z pliku"
+                                        GridPane.halignment="CENTER"/>
                                 <GridPane prefHeight="28.0" prefWidth="170.0" GridPane.rowIndex="2">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,18 +60,37 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button fx:id="PreviousExample" mnemonicParsing="false" onAction="#handleButtonActionPreviousExample" text="Poprzedni" visible="false" />
-                                        <Button fx:id="NextExample" mnemonicParsing="false" onAction="#handleButtonActionNextExample" text="Następny" visible="false" GridPane.columnIndex="1" />
+                                        <Button fx:id="PreviousExample" mnemonicParsing="false"
+                                                onAction="#handleButtonActionPreviousExample" text="Poprzedni"
+                                                visible="false" GridPane.halignment="CENTER"/>
+                                        <Button fx:id="NextExample" mnemonicParsing="false"
+                                                onAction="#handleButtonActionNextExample" text="Następny"
+                                                visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
                                     </children>
                                 </GridPane>
-                                <Label fx:id="ExamplesCount" text="Brak pliku | Przykład -/-" visible="false" GridPane.rowIndex="1" />
+                                <Label fx:id="ExamplesCount" text="Brak pliku | Przykład -/-" visible="false"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
                             </children>
                         </GridPane>
-                        <Circle fx:id="BergerCodeStatus" fill="#309c0b" radius="42.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                        <Circle fx:id="BergerCodeStatus" fill="#309c0b" radius="42.0" stroke="BLACK" strokeType="INSIDE"
+                                GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                             <GridPane.margin>
-                                <Insets left="75.0" right="35.0" />
+                                <Insets left="75.0" right="22.0"/>
                             </GridPane.margin>
                         </Circle>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="270.0">
+                                    <children>
+                                        <Label fx:id="Output" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="-1.0"
+                                               layoutY="-1.0" prefHeight="320.0" prefWidth="270.0"
+                                               style="-fx-background-color: white; -fx-border-color: black;"
+                                               text="Symulator działania kodu Bergera. Proszę wybrać plik zawierający przykłady."
+                                               wrapText="true"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </ScrollPane>
                     </children>
                     <opaqueInsets>
                         <Insets left="75.0" />
@@ -82,10 +105,15 @@
                         <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="bity kodu Bergera?" />
+                        <Label text="Kod Bergera" textAlignment="CENTER">
+                            <padding>
+                                <Insets left="10.0"/>
+                            </padding>
+                        </Label>
                         <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
                             <content>
-                                <HBox fx:id="hBox2" prefHeight="33.0" prefWidth="665.0" />
+                                <HBox fx:id="hBox2" prefHeight="33.0" prefWidth="665.0"
+                                      style="-fx-background-color: LightGray;"/>
                             </content>
                         </ScrollPane>
                     </children>
@@ -99,53 +127,72 @@
                         <RowConstraints maxHeight="46.799993896484374" minHeight="0.0" prefHeight="19.599981689453124" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Prezentowanie N-bitów danych" />
+                        <Label text="Reprezentacja bitowa danych wejściowych">
+                            <GridPane.margin>
+                                <Insets left="10.0"/>
+                            </GridPane.margin>
+                        </Label>
                         <ScrollPane fx:id="scrollPane1" hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" GridPane.rowIndex="1">
                             <content>
-                                <HBox fx:id="hBox1" prefHeight="34.0" prefWidth="1018.0" />
+                                <HBox fx:id="hBox1" prefHeight="34.0" prefWidth="1018.0"
+                                      style="-fx-background-color: LightGray;"/>
                             </content>
                         </ScrollPane>
                     </children>
                 </GridPane>
-            <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                      <Button fx:id="preset2" mnemonicParsing="false" onAction="#HandleButtonPreset2" text="Preset 2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                      <Button fx:id="preset1" mnemonicParsing="false" onAction="#HandleButtonPreset1" text="Preset 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-               </children>
-            </GridPane>
-            <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                      <Button fx:id="preset3" mnemonicParsing="false" onAction="#HandleButtonPreset3" text="Preset 3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                      <Button fx:id="preset4" mnemonicParsing="false" onAction="#HandleButtonPreset4" text="Preset 4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-               </children>
-            </GridPane>
-            <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Button fx:id="preset5" mnemonicParsing="false" onAction="#HandleButtonPreset5" text="Preset 5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="reset" mnemonicParsing="false" onAction="#HandleButtonReset" text="Reset" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-               </children>
-            </GridPane>
+                <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="preset2" mnemonicParsing="false" onAction="#HandleButtonPreset2" text="Preset 2"
+                                visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                                GridPane.valignment="CENTER"/>
+                        <Button fx:id="preset1" mnemonicParsing="false" onAction="#HandleButtonPreset1" text="Preset 1"
+                                visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                    </children>
+                </GridPane>
+                <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="preset3" mnemonicParsing="false" onAction="#HandleButtonPreset3" text="Preset 3"
+                                visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                        <Button fx:id="preset4" mnemonicParsing="false" onAction="#HandleButtonPreset4" text="Preset 4"
+                                visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                                GridPane.valignment="CENTER"/>
+                    </children>
+                </GridPane>
+                <GridPane style="-fx-background-color: Gray;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="preset5" mnemonicParsing="false" onAction="#HandleButtonPreset5" text="Preset 5"
+                                visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: dimgray;"
+                                    GridPane.rowIndex="1">
+                            <children>
+                                <Button fx:id="reset" layoutX="35.0" layoutY="22.0" mnemonicParsing="false"
+                                        onAction="#HandleButtonReset" text="Reset" textAlignment="CENTER"
+                                        visible="false"/>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </GridPane>
             </children>
         </GridPane>
     </children>

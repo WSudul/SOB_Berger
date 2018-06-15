@@ -5,10 +5,10 @@ import io.DataInput;
 import io.DataReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -19,40 +19,41 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import presets.Preset;
 import report.Record;
 import report.Report;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import static presets.Preset.*;
 
 
-public class Controller {
+public class Controller implements Initializable {
 
-    private List<BergerCode> bergerCodes=new ArrayList<>();
+    private static int flag = 0;
     private List<DataInput> dataInputs = new ArrayList<>(); //original loaded data
     private static BergerCode currentExampleBerger;
-    BergerCode currentExampleOriginal; //backup for restart
+    private final String ButtonCodeWordName = "buttonCodeWord";
     private static int indexOfExamples;
+    private final String ButtonCheckBitsName = "buttonCheckBits";
+    private List<BergerCode> bergerCodes = new ArrayList<>();
+    private BergerCode currentExampleOriginal; //backup for restart
 
-    public Controller(){
+    private Random generator = new Random(); //temporary - will be updated with random seed
+    @FXML
+    private Button reset, preset1, preset2, preset3, preset4, preset5, PreviousExample, NextExample, GenerateRaport;
+
+    public Controller() {
         indexOfExamples = 1;
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> handleBergerCodeError()));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
     }
-    private Random generator = new Random(); //temporary - will be updated with random seed
-
-    @FXML
-    private static Button[] buttons, buttons2;
-
-    @FXML
-    private Button LoadFile, reset, preset1,preset2,preset3,preset4, preset5, PreviousExample, NextExample, GenerateRaport;
 
     @FXML
     private Label Output, ExamplesCount;
@@ -63,28 +64,30 @@ public class Controller {
     @FXML
     private HBox hBox1, hBox2;
 
-    @FXML
-    private void handleButtonActionGenerateReport(ActionEvent event){
-        final int kMin=1;
-        final int kMax=5;
-        Report report=new Report();
-
-        for (DataInput dataInput : dataInputs)
-        {
-            BergerCode bergerCode = GenerateBergerCode(dataInput);
-            int randomNumber = generator.nextInt(kMax)+kMin;
-            System.out.println("randomNumber for preset: " + randomNumber);
-            BergerCode modifiedInstance=createModifiedInstance(bergerCode,randomNumber);
-            ChangeType changeType=ChangeType.findByKey(randomNumber);
-            Record record=new Record(modifiedInstance,changeType);
-            report.addRecord(bergerCode,record);
-
-        }
-        report.exportToFile("SOB_Report");
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Output.setText("Symulator działania kodu Bergera. \nProszę wybrać plik zawierający przykłady.");
     }
 
-    private BergerCode createModifiedInstance(BergerCode bergerCode, int preset){
+    //TODO Generating report to choosen file
+    @FXML
+    private void handleButtonActionGenerateReport() {
+        final int kMin = 1;
+        final int kMax = 5;
+        Report report = new Report();
+
+        for (DataInput dataInput : dataInputs) {
+            BergerCode bergerCode = GenerateBergerCode(dataInput);
+            int randomNumber = generator.nextInt(kMax) + kMin;
+            BergerCode modifiedInstance = createModifiedInstance(bergerCode, randomNumber);
+            ChangeType changeType = ChangeType.findByKey(randomNumber);
+            Record record = new Record(modifiedInstance, changeType);
+            report.addRecord(bergerCode, record);
+        }
+        report.exportToFile("SOB_Report");
+    }
+
+    private BergerCode createModifiedInstance(BergerCode bergerCode, int preset) {
         BergerCode modifiedInstance = new BergerCode(bergerCode);
 
         switch (preset) {
@@ -110,164 +113,154 @@ public class Controller {
     }
 
     @FXML
-    public void handleButtonActionLoadFromFile(ActionEvent actionEvent) throws IOException {
-        //Chosing File
+    public void handleButtonActionLoadFromFile() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Wybierz plik");
         File file = chooser.showOpenDialog(new Stage());
 
         try {
             dataInputs = DataReader.readJsonData(file.getCanonicalPath());
-
-            //Initializing List of BergerCodes
             bergerCodes.clear();
             for (DataInput dataInput : dataInputs) {
-                System.out.println("dataInput: " + dataInput.getType() + " " + dataInput.getData());
                 BergerCode bergerCode = GenerateBergerCode(dataInput);
                 bergerCodes.add(bergerCode);
             }
-            //Initialize displayed example
+
             currentExampleBerger = bergerCodes.get(0);
-            currentExampleOriginal = new BergerCode(currentExampleBerger);
+            setCurrentAsOriginal();
+            refreshExamplesCount();
+            setButtonsVisible();
 
-
-            //Exposing switch-example Menu
-            ExamplesCount.setText(indexOfExamples + "/" + bergerCodes.size());
-            if(!PreviousExample.isVisible())
-                PreviousExample.setVisible(true);
-            if(!NextExample.isVisible())
-                NextExample.setVisible(true);
-            if(!ExamplesCount.isVisible())
-                ExamplesCount.setVisible(true);
-            System.out.println("" + currentExampleBerger.getCodeWord().toList().toString());
-            //Displaying current example
             sethBox();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    final String kKuttonCodeWordName = "buttonCodeWord";
-    final String kKuttonCheckBitsName = "buttonCheckBits";
+    private void setButtonsVisible() {
+        if (!PreviousExample.isVisible())
+            PreviousExample.setVisible(true);
+        if (!NextExample.isVisible())
+            NextExample.setVisible(true);
+        if (!ExamplesCount.isVisible())
+            ExamplesCount.setVisible(true);
+        if (!preset1.isVisible())
+            preset1.setVisible(true);
+        if (!preset2.isVisible())
+            preset2.setVisible(true);
+        if (!preset3.isVisible())
+            preset3.setVisible(true);
+        if (!preset4.isVisible())
+            preset4.setVisible(true);
+        if (!preset5.isVisible())
+            preset5.setVisible(true);
+        if (!reset.isVisible())
+            reset.setVisible(true);
+        if (!GenerateRaport.isVisible())
+            GenerateRaport.setVisible(true);
+    }
 
-    public void sethBox(){
+    private boolean isBitChanged(int i, String Name) {
+        if (Name.equals(ButtonCodeWordName))
+            return !currentExampleBerger.getCodeWord().toList().get(i).toString().equals
+                    (currentExampleOriginal.getCodeWord().toList().get(i).toString());
+        else
+            return !currentExampleBerger.getCheckBits().toList().get(i).toString().equals
+                    (currentExampleOriginal.getCheckBits().toList().get(i).toString());
+    }
+
+    private Button[] BitContainerToButtons(List<Boolean> bitContainer, String Name) {
+        int numberOfButtons = bitContainer.size();
+        Button[] buttons = new Button[numberOfButtons];
+
+        for (int i = 0; i < numberOfButtons; i++) {
+            buttons[i] = new Button();
+            buttons[i].setId(Name + i);
+            buttons[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
+            buttons[i].setText("" + (bitContainer.get(i).toString().equals("false") ? "0" : "1"));
+            if (isBitChanged(i, Name))
+                buttons[i].setTextFill(Color.RED);
+        }
+        return buttons;
+    }
+
+    private void sethBox() {
         hBox1.getChildren().clear();
         hBox2.getChildren().clear();
 
-        int numberOfButtons = currentExampleBerger.getCodeWord().length();
-        buttons = new Button[numberOfButtons];
+        clearPrompt();
+        addToPropmt("Aktualny przyklad : " + dataInputs.get(indexOfExamples - 1).getData());
 
-        for(int i = 0; i<numberOfButtons;i++){
-
-            buttons[i] = new Button();
-
-            buttons[i].setUserData(i);
-
-            buttons[i].setId("buttonCodeWord" + i);
-
-            buttons[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
-
-            buttons[i].setText("" + (currentExampleBerger.getCodeWord().toList().get(i).toString().equals("false")? "0": "1"));
-
-        }
-        hBox1.getChildren().addAll(buttons);
-
-        int numberOfButtons2 = currentExampleBerger.getCheckBits().toList().size();
-        buttons2 = new Button[numberOfButtons2];
-
-        for(int i = 0; i<numberOfButtons2;i++){
-
-            buttons2[i] = new Button();
-
-            buttons2[i].setUserData(i);
-
-            buttons2[i].setId("buttonCheckBits" + i);
-
-            buttons2[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
-
-            buttons2[i].setText("" + (currentExampleBerger.getCheckBits().toList().get(i).toString().equals("false")? "0": "1"));
-
-        }
-        hBox2.getChildren().addAll(buttons2);
-    }
-
-
-    private class MyEventHandler implements EventHandler<Event> {
-        @Override
-        public void handle(Event evt) {
-            Control control = (Control) evt.getSource();
-            String objectId = control.getId();
-
-            BitContainerInterface bitContainer;
-
-            //  Button button = (Button) scene.lookup("#" + id);
-            System.out.println(control.getId());
-
-            int indexToFlip;
-            if (objectId.startsWith(kKuttonCodeWordName)) {
-                indexToFlip = Integer.parseInt(control.getId().replace(kKuttonCodeWordName, ""));
-                bitContainer = currentExampleBerger.getCodeWord();
-            } else {
-                indexToFlip = Integer.parseInt(control.getId().replace(kKuttonCheckBitsName, ""));
-                bitContainer = currentExampleBerger.getCheckBits();
-            }
-
-            //Change of button text
-            Button lookup = (Button) control.getScene().lookup("#" + objectId);
-            lookup.setText((lookup.getText().equals("1")) ? "0" : "1");
-
-            //change of bit in Berger code
-            if (!bitContainer.flipBit(indexToFlip))
-                System.out.println("error while flipping");
-
-            System.out.println(bitContainer.toList());
-        }
+        hBox1.getChildren().addAll(BitContainerToButtons(currentExampleBerger.getCodeWord().toList(), ButtonCodeWordName));
+        hBox2.getChildren().addAll(BitContainerToButtons(currentExampleBerger.getCheckBits().toList(), ButtonCheckBitsName));
     }
 
     @FXML
-    private void HandleButtonReset(ActionEvent actionEvent){
+    private void HandleButtonReset() {
         currentExampleBerger = new BergerCode(currentExampleOriginal);
         sethBox();
     }
 
-    Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
-        @Override
-        public void handle(ActionEvent event) {
-            handleBergerCodeError();
-        }
-    }));
-
     private void handleBergerCodeError() {
-        if(currentExampleBerger != null) {
-            if (currentExampleBerger.isErrorDetected())
+        if (currentExampleBerger != null) {
+            if (currentExampleBerger.isErrorDetected()) {
                 BergerCodeStatus.setFill(Color.RED);
-            else
+                if (flag != 1) {
+                    addToPropmt("Wykryto blad.");
+                    flag = 1;
+                }
+            } else {
                 BergerCodeStatus.setFill(Color.GREEN);
+
+                if (!(currentExampleBerger.getCodeWord().toList().equals(currentExampleOriginal.getCodeWord().toList()))
+                        || !(currentExampleBerger.getCheckBits().toList().equals(currentExampleOriginal.getCheckBits().toList()))) {
+                    BergerCodeStatus.setFill(Color.ORANGE);
+                    if (flag > -1) {
+                        addToPropmt("Kod Bergera nie wykryl bledu.");
+                        flag = -1;
+                    }
+                } else if (flag != 0) flag = 0;
+            }
         }
     }
 
     @FXML
-    public void handleButtonActionPreviousExample(ActionEvent actionEvent) {
-        if(indexOfExamples > 1) {
+    public void handleButtonActionPreviousExample() {
+        if (indexOfExamples > 1) {
             indexOfExamples--;
-            ExamplesCount.setText(indexOfExamples + "/" + bergerCodes.size());
-            currentExampleBerger = bergerCodes.get(indexOfExamples-1);
-            System.out.println(currentExampleBerger.getCodeWord().toList().toString());
+            refreshExamplesCount();
+            currentExampleBerger = bergerCodes.get(indexOfExamples - 1);
+            setCurrentAsOriginal();
             sethBox();
         }
     }
 
     @FXML
-    public void handleButtonActionNextExample(ActionEvent actionEvent) {
-        if(indexOfExamples < bergerCodes.size()) {
+    public void handleButtonActionNextExample() {
+        if (indexOfExamples < bergerCodes.size()) {
             indexOfExamples++;
-            ExamplesCount.setText(indexOfExamples + "/" + bergerCodes.size());
-            currentExampleBerger = bergerCodes.get(indexOfExamples-1);
-            System.out.println(currentExampleBerger.getCodeWord().toList().toString());
+            refreshExamplesCount();
+            currentExampleBerger = bergerCodes.get(indexOfExamples - 1);
+            setCurrentAsOriginal();
             sethBox();
         }
 
+    }
+
+    private void refreshExamplesCount() {
+        ExamplesCount.setText(indexOfExamples + "/" + bergerCodes.size());
+    }
+
+    private void setCurrentAsOriginal() {
+        currentExampleOriginal = new BergerCode(currentExampleBerger);
+    }
+
+    @FXML
+    public void HandleButtonPreset1() {
+        //changes single value from 1 to 0
+        currentExampleBerger = createModifiedInstance(currentExampleBerger, 1);
+        addToPropmt("Preset pierwszy, wskrzykniecie bledu z wartosci 1 na 0.");
+        sethBox();
     }
 
     private BergerCode GenerateBergerCode(DataInput dataInput) {
@@ -293,40 +286,73 @@ public class Controller {
         return bergerCode;
     }
 
-    private Preset preset = new Preset();
-
     @FXML
-    public void HandleButtonPreset1(ActionEvent actionEvent){
+    public void HandleButtonPreset2() {
         //changes single value from 1 to 0
-        currentExampleBerger = createModifiedInstance(currentExampleBerger,1);
+        currentExampleBerger = createModifiedInstance(currentExampleBerger, 2);
+        addToPropmt("Preset drugi, wskrzykniecie bledu z wartosci 1 na 0.");
         sethBox();
     }
 
     @FXML
-    public void HandleButtonPreset2(ActionEvent actionEvent){
-        //changes single value from 1 to 0
-        currentExampleBerger = createModifiedInstance(currentExampleBerger,2);
-        sethBox();
-    }
-
-    @FXML
-    public void HandleButtonPreset3(ActionEvent actionEvent){
+    public void HandleButtonPreset3() {
         //changes multiple values from 0 to 1
-        currentExampleBerger = createModifiedInstance(currentExampleBerger,3);
+        currentExampleBerger = createModifiedInstance(currentExampleBerger, 3);
+        addToPropmt("Preset trzeci, wskrzykniecie wielokrotnych bledow z wartosci 0 na 1.");
         sethBox();
     }
 
     @FXML
-    public void HandleButtonPreset4(ActionEvent actionEvent){
+    public void HandleButtonPreset4() {
         //changes multiple values from 1 to 0
-        currentExampleBerger = createModifiedInstance(currentExampleBerger,4);
+        currentExampleBerger = createModifiedInstance(currentExampleBerger, 4);
         sethBox();
+        addToPropmt("Preset czwarty, wskrzykniecie wielokrotnych bledow z wartosci 1 na 0.");
     }
 
     @FXML
-    public void HandleButtonPreset5(ActionEvent actionEvent){
+    public void HandleButtonPreset5() {
         //changes multiple values, bidirectional
-        currentExampleBerger = createModifiedInstance(currentExampleBerger,5);
+        currentExampleBerger = createModifiedInstance(currentExampleBerger, 5);
         sethBox();
+        addToPropmt("Preset piaty, wskrzykniecie wielokrotnych bledow dwukierunkowych.");
+    }
+
+    private void clearPrompt() {
+        Output.setText("");
+    }
+
+    private void addToPropmt(String str) {
+        Output.setText(Output.getText() + "\n" + str);
+    }
+
+    private class MyEventHandler implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            Control control = (Control) evt.getSource();
+            String objectId = control.getId();
+            BitContainerInterface bitContainer;
+
+            //Change of button text
+            Button lookup = (Button) control.getScene().lookup("#" + objectId);
+            lookup.setText((lookup.getText().equals("1")) ? "0" : "1");
+
+            int indexToFlip;
+            if (objectId.startsWith(ButtonCodeWordName)) {
+                indexToFlip = Integer.parseInt(control.getId().replace(ButtonCodeWordName, ""));
+                bitContainer = currentExampleBerger.getCodeWord();
+                if (!isBitChanged(indexToFlip, ButtonCodeWordName)) lookup.setTextFill(Color.RED);
+                else lookup.setTextFill(Color.BLACK);
+            } else {
+                indexToFlip = Integer.parseInt(control.getId().replace(ButtonCheckBitsName, ""));
+                bitContainer = currentExampleBerger.getCheckBits();
+                if (!isBitChanged(indexToFlip, ButtonCheckBitsName)) lookup.setTextFill(Color.RED);
+                else lookup.setTextFill(Color.BLACK);
+            }
+
+            //change of bit in Berger code
+            if (!bitContainer.flipBit(indexToFlip))
+                System.err.println("error while flipping");
+        }
     }
 }
