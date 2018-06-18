@@ -67,7 +67,6 @@ public class Preset {
     }
 
     public static BergerCode PresetMultipleOnes(BergerCode bergerCode) {
-
         BitContainerInterface codeWord = bergerCode.getCodeWord();
         BitContainerInterface checkBits = bergerCode.getCheckBits();
 

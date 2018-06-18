@@ -103,6 +103,7 @@ public class Controller implements Initializable {
                 break;
             case 4:
                 PresetMultipleOnes(modifiedInstance);
+                break;
             case 5:
                 PresetMultipleMixed(modifiedInstance);
                 break;
@@ -307,6 +308,7 @@ public class Controller implements Initializable {
     public void HandleButtonPreset4() {
         //changes multiple values from 1 to 0
         currentExampleBerger = createModifiedInstance(currentExampleBerger, 4);
+        System.out.println(currentExampleBerger.toString());
         sethBox();
         addToPropmt("Preset czwarty, wskrzykniecie wielokrotnych bledow z wartosci 1 na 0.");
     }
