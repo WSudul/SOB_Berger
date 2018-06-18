@@ -17,11 +17,6 @@ public class Record {
         this.isErrorDetected = modifiedBergerCode.isErrorDetected();
     }
 
-
-    public boolean isErrorDetected() {
-        return isErrorDetected;
-    }
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Record{");

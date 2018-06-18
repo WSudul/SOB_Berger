@@ -51,7 +51,7 @@ public class Report {
     public boolean exportToFile(String fileName) {
 
         String stringTimestamp=timestamp.truncatedTo(ChronoUnit.SECONDS).toString();
-        Path file = Paths.get(fileName + "_" + stringTimestamp.replaceAll("[:-]", "_"));
+        Path file = Paths.get(fileName + "_" + stringTimestamp.replaceAll("[:-]", "_") + ".json");
         try {
             Files.createFile(file);
             Files.write(file, serialize(this).getBytes());
