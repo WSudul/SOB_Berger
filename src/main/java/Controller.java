@@ -72,17 +72,18 @@ public class Controller implements Initializable {
     //TODO Generating report to choosen file
     @FXML
     private void handleButtonActionGenerateReport() {
-        final int kMin = 1;
+        final int kMin = 0;
         final int kMax = 5;
         Report report = new Report();
 
         for (DataInput dataInput : dataInputs) {
             BergerCode bergerCode = GenerateBergerCode(dataInput);
-            int randomNumber = generator.nextInt(kMax) + kMin;
-            BergerCode modifiedInstance = createModifiedInstance(bergerCode, randomNumber);
-            ChangeType changeType = ChangeType.findByKey(randomNumber);
-            Record record = new Record(modifiedInstance, changeType);
-            report.addRecord(bergerCode, record);
+            for (int i = kMin; i <= kMax; ++i) {
+                BergerCode modifiedInstance = createModifiedInstance(bergerCode, i);
+                ChangeType changeType = ChangeType.findByKey(i);
+                Record record = new Record(modifiedInstance, changeType);
+                report.addRecord(bergerCode, record);
+            }
         }
         report.exportToFile("SOB_Report");
     }
