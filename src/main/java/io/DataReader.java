@@ -12,9 +12,6 @@ import java.util.List;
 
 public class DataReader {
 
-    private DataReader() {
-    }
-
     public static List<DataInput> readJsonData(String filename) throws IOException {
         Path file = Paths.get(filename);
         BufferedReader reader = Files.newBufferedReader(file);

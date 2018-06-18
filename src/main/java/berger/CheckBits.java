@@ -40,13 +40,6 @@ class CheckBits extends BitContainer {
         }
     }
 
-    /*
-    We form the binary number corresponding to the number of
-    ones in the n - k information bits and
-    take the binary complement of each digit in this number; i.e.,
-    change all zeros to ones and all ones to zeros.
-    This re- sultant binary number is the k cheek bits.  - from J.M. Berger paper;.
-     */
     private BitSet convertLongToBitSet(long value) {
         BitSet bitset = new BitSet();
         int index = 0;
